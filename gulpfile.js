@@ -80,7 +80,7 @@ gulp.task('clean', function () {
       path.join(DEST, 'images'),
       path.join(DEST, 'views'),
       path.join(DEST, 'scripts'),
-      path.join(DEST, 'layout.html')
+      path.join(DEST, 'index.html')
     ],
     {read: false}).pipe($.clean());
 });
@@ -144,7 +144,7 @@ gulp.task('watch', function () {
 gulp.task('connect', function () {
   $.connect.server({
     root: ['build', 'tmp'],
-    port: 8000,
+    port: 9000,
     livereload: true
   });
 });
