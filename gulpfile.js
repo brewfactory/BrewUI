@@ -54,6 +54,14 @@ gulp.task('images', function () {
     .pipe($.size());
 });
 
+// CSS style sheets
+gulp.task('styles', function() {
+  return gulp.src('./src/styles/**/*.css')
+    .pipe($.csso())
+    .pipe(gulp.dest(path.join(DEST, 'styles')))
+    .pipe($.size({title: 'styles'}));
+});
+
 // Fonts
 gulp.task('fonts', function () {
   return gulp.src(mainBowerFiles())
@@ -89,7 +97,7 @@ gulp.task('htmlBundle', ['bower'], function () {
 });
 
 // Build
-gulp.task('build', ['clean', 'html', 'htmlBundle', 'bundle', 'images', 'fonts']);
+gulp.task('build', ['clean', 'html', 'htmlBundle', 'styles', 'bundle', 'images', 'fonts']);
 
 // Default task
 gulp.task('default', ['clean'], function () {
@@ -111,14 +119,16 @@ gulp.task('serve', ['build'], function () {
 
   WATCH = true;
 
-  // TODO: styles
+  // Watch styles
+  gulp.watch('src/styles/**/*.css', ['styles'])
+    .on('change', $.livereload.changed);
 
   // Watch bower
   gulp.watch('bower.json', ['fonts'])
     .on('change', $.livereload.changed);
 
   // Watch .html files
-  gulp.watch('src/views/*.html', ['html', 'htmlBundle'])
+  gulp.watch('src/views/**/*.html', ['html', 'htmlBundle'])
     .on('change', $.livereload.changed);
 
   // Watch image files
