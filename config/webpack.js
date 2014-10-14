@@ -24,7 +24,7 @@ module.exports = function(release) {
     cache: !release,
     debug: !release,
     devtool: false,
-    entry: './src/app/app.js',
+    entry: './src/app/client.js',
 
     stats: {
       colors: true,

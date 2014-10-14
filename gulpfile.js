@@ -111,6 +111,8 @@ gulp.task('serve', ['build'], function () {
 
   WATCH = true;
 
+  // TODO: styles
+
   // Watch bower
   gulp.watch('bower.json', ['fonts'])
     .on('change', $.livereload.changed);
