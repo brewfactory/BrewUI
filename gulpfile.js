@@ -4,6 +4,7 @@ var path = require('path');
 
 var gulp = require('gulp');
 var webpack = require('webpack');
+var runSequence = require('run-sequence');
 
 // Load plugins
 var $ = require('gulp-load-plugins')();
@@ -74,10 +75,12 @@ gulp.task('fonts', function () {
 // Clean
 gulp.task('clean', function () {
   return gulp.src([
+      path.join(DEST, 'fonts'),
       path.join(DEST, 'styles'),
       path.join(DEST, 'images'),
       path.join(DEST, 'views'),
-      path.join(DEST, 'scripts')
+      path.join(DEST, 'scripts'),
+      path.join(DEST, 'layout.html')
     ],
     {read: false}).pipe($.clean());
 });
@@ -87,7 +90,7 @@ gulp.task('clean', function () {
 gulp.task('htmlBundle', ['bower'], function () {
   var assets = $.useref.assets();
 
-  return gulp.src('./src/views/*.html')
+  return gulp.src('./src/views/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.csso()))
@@ -97,7 +100,9 @@ gulp.task('htmlBundle', ['bower'], function () {
 });
 
 // Build
-gulp.task('build', ['clean', 'html', 'htmlBundle', 'styles', 'bundle', 'images', 'fonts']);
+gulp.task('build', function (callback) {
+  runSequence('clean', 'html', 'htmlBundle', 'bundle', ['styles', 'images', 'fonts'], callback);
+});
 
 // Default task
 gulp.task('default', ['clean'], function () {
@@ -114,10 +119,8 @@ gulp.task('bower', function () {
 });
 
 // Watch
-gulp.task('serve', ['build'], function () {
+gulp.task('watch', function () {
   $.livereload.listen();
-
-  WATCH = true;
 
   // Watch styles
   gulp.watch('src/styles/**/*.css', ['styles'])
@@ -134,9 +137,21 @@ gulp.task('serve', ['build'], function () {
   // Watch image files
   gulp.watch('src/images/**/*', ['images'])
     .on('change', $.livereload.changed);
+});
 
+
+// Serve
+gulp.task('connect', function () {
   $.connect.server({
     root: ['build', 'tmp'],
-    port: 8000
+    port: 8000,
+    livereload: true
   });
+});
+
+// Serve
+gulp.task('serve', function (callback) {
+  WATCH = true;
+
+  runSequence('build', 'watch', 'connect', callback);
 });
