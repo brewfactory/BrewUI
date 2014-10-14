@@ -26,6 +26,7 @@ app = application.getComponent();
 mountNode = document.getElementById('app');
 
 bootstrapDebug('React Rendering');
+
 React.renderComponent(app, mountNode, function () {
   bootstrapDebug('React Rendered');
 });

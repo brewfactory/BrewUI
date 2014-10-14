@@ -9,7 +9,8 @@ var RouterMixin = require('flux-router-component').RouterMixin;
 
 var Nav = require('./Nav.jsx');
 var Foot = require('./Foot.jsx');
-var Dashboard = require('./Dashboard.jsx');
+var Dashboard = require('./dashboard/Dashboard.jsx');
+var Log = require('./log/Log.jsx');
 
 var Application = React.createClass({
   mixins: [RouterMixin],
@@ -22,6 +23,16 @@ var Application = React.createClass({
    * @return {Object} state
    */
   getInitialState: function () {
+
+    // TODO: test only
+    var createActualBrew = require('../actions/createActualBrew');
+    var context = this.props.context;
+    setTimeout(function () {
+      context.executeAction(createActualBrew, {
+        name: 'Sample IPA'
+      });
+    }, 1000);
+
     this.store = this.props.context.getStore('ApplicationStore');
     return this.store.getState();
   },
@@ -72,13 +83,16 @@ var Application = React.createClass({
    * @method render
    */
   render: function () {
-    var pageName = this.state.currentPageName || 'dashboard';
+    var pageName = this.state.currentPageName;
     var route = this.state.route;
 
     var page;
 
     // Select page for routing
-    switch (pageName) {
+    switch (this.state.currentPageName) {
+      case 'log':
+        page = <Log context={this.props.context} />;
+        break;
       default:
         page = <Dashboard context={this.props.context} />;
         break;

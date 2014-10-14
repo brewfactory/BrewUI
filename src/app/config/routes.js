@@ -10,5 +10,11 @@ module.exports = {
     path: '/',
     method: 'get',
     page: 'dashboard'
+  },
+  log: {
+    name: 'Logs',
+    path: '/log',
+    method: 'get',
+    page: 'log'
   }
 };

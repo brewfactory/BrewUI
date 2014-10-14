@@ -33,7 +33,7 @@ function ApplicationStore() {
 // Configure store
 ApplicationStore.storeName = 'ApplicationStore';
 ApplicationStore.handlers = {
-  'CHANGE_ROUTE_START': 'handleNavigate'
+  CHANGE_ROUTE_START: 'handleNavigate'
 };
 
 // Inherit ApplicationStore from the EventEmitter

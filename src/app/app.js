@@ -10,12 +10,14 @@ var debug = require('debug');
 
 var Context = require('./lib/Context');
 var ApplicationStore = require('./stores/ApplicationStore');
+var BrewStore = require('./stores/BrewStore');
 var Application = require('./components/Application.jsx');
 var routes = require('./config/routes');
 
 var bootstrapDebug = debug('App');
 
 Context.registerStore(ApplicationStore);
+Context.registerStore(BrewStore);
 
 /*
  * App

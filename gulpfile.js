@@ -144,8 +144,9 @@ gulp.task('watch', function () {
 gulp.task('connect', function () {
   $.connect.server({
     root: ['build', 'tmp'],
-    port: 9000,
-    livereload: true
+    port: process.env.PORT || 9000,
+    livereload: true,
+    fallback: path.join(DEST, 'index.html')
   });
 });
 
