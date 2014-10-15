@@ -6,8 +6,7 @@ var React = require('react/addons');
 var debug = require('debug');
 
 var Application = require('../app/app');
-
-var bootstrapDebug = debug('App');
+var clientDebug = debug('BrewUI:client');
 var App = App || {};
 var dehydratedState = App && App.Context;     // Sent from the server
 
@@ -16,14 +15,15 @@ var app;
 var mountNode;
 
 window.React = React;                         // For chrome dev tool support
-debug.enable('*');
+debug.enable('BrewUI*');
 
 var fetcher = require('../app/lib/Fetcher');
 
 // Register fetchers
 fetcher.register('brew', require('./fetchers/brew'));
 
-bootstrapDebug('rehydrating app');
+clientDebug('rehydrating app');
+
 application = new Application({
   fetcher: fetcher,
   initialState: dehydratedState
@@ -33,18 +33,24 @@ window.context = application.context;
 app = application.getComponent();
 mountNode = document.getElementById('app');
 
-bootstrapDebug('React Rendering');
+clientDebug('React Rendering');
 
 React.renderComponent(app, mountNode, function () {
-  bootstrapDebug('React Rendered');
+  clientDebug('React Rendered');
+});
+
+// Use WebSockets as data source
+require('./module/WebSocket')({
+  server: 'http://localhost:9003',
+  context: application.getActionContext()
 });
 
 // TODO: test only
-var createBrew = require('./../app/actions/createBrew');
+var createBrew = require('./../app/actions/brew/createBrew');
 setTimeout(function () {
   application.getActionContext().executeAction(createBrew, {
     name: 'Sample IPA',
-    phases: [{min:10, temp:1}],
+    phases: [{min:10, temp:50}],
     startTime: new Date()
   });
 }, 1000);

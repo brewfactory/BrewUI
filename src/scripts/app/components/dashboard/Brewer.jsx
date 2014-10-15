@@ -3,12 +3,9 @@
 /* jshint ignore:start */
 
 var React = require('react/addons');
-var debug = require('debug')('BrewUI:Dashboard');
-var navigateAction = require('flux-router-component').navigateAction;
+var debug = require('debug')('BrewUI:Brewer');
 
-var Brewer = require('./Brewer.jsx');
-
-var Dashboard = React.createClass({
+var Brewer = React.createClass({
 
   /*
    * Get initial state
@@ -17,7 +14,7 @@ var Dashboard = React.createClass({
    * @return {Object} state
    */
   getInitialState: function () {
-    this.store = this.props.context.getStore('BrewStore');
+    this.store = this.props.context.getStore('BrewerStore');
     return this.store.getState();
   },
 
@@ -59,21 +56,16 @@ var Dashboard = React.createClass({
    * @method render
    */
   render: function () {
-    var brew = this.state.brew;
-
     return (
       <div className="row">
-        <div className="col-md-8">
-          <h1>Dashboard</h1>
-          <h2>{brew.name}</h2>
-          <p className="bg-warning"> TODO </p>
+        <div className="col-md-11">
+          <div className="well well-md">
+            <h3>Temperature: {this.state.temperature}</h3>
           </div>
-        <div className="col-md-4">
-          <Brewer context={this.props.context} />
-         </div>
+        </div>
       </div>
     );
   }
 });
 
-module.exports = Dashboard;
+module.exports = Brewer;

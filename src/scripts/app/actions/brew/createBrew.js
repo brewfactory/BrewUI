@@ -1,7 +1,7 @@
 'use strict';
 
-var debug = require('debug')('BrewUI:createMessageAction');
-var BrewConstants = require('../constants/BrewConstants');
+var debug = require('debug')('BrewUI:action');
+var BrewConstants = require('../../constants/BrewConstants');
 
 module.exports = function (context, payload, done) {
   var brew = {

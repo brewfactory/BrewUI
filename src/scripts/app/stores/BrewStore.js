@@ -10,7 +10,7 @@ var EventEmitter = require('events').EventEmitter;
 var BrewConstants = require('../constants/BrewConstants');
 
 /*
- * Application store
+ * Brew store
  *
  * @constructor ApplicationStore
  * @param {Object} dispatcher

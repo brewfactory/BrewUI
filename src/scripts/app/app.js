@@ -6,18 +6,17 @@
 
 'use strict';
 
-var debug = require('debug');
+var debug = require('debug')('BrewUI:app');
 
 var Context = require('./lib/Context');
 var Application = require('./components/Application.jsx');
 var routes = require('./config/routes');
 
-var ApplicationStore = require('./stores/ApplicationStore');
-var BrewStore = require('./stores/BrewStore');
 
 // Register stores
-Context.registerStore(ApplicationStore);
-Context.registerStore(BrewStore);
+Context.registerStore(require('./stores/ApplicationStore'));
+Context.registerStore(require('./stores/BrewStore'));
+Context.registerStore(require('./stores/BrewerStore'));
 
 
 /*
