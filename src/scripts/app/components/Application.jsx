@@ -23,18 +23,6 @@ var Application = React.createClass({
    * @return {Object} state
    */
   getInitialState: function () {
-
-    // TODO: test only
-    var createBrew = require('../actions/createBrew');
-    var context = this.props.context;
-    setTimeout(function () {
-      context.executeAction(createBrew, {
-        name: 'Sample IPA',
-        phases: [{min:10, temp:1}],
-        startTime: new Date()
-      });
-    }, 1000);
-
     this.store = this.props.context.getStore('ApplicationStore');
     return this.store.getState();
   },

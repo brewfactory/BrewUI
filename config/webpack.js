@@ -17,14 +17,14 @@ module.exports = function(release) {
   return {
     output: {
       path: './build/scripts/',
-      filename: 'app.js',
+      filename: 'client.js',
       publicPatch: './build/scripts/'
     },
 
     cache: !release,
     debug: !release,
     devtool: false,
-    entry: './src/app/client.js',
+    entry: './src/scripts/client/client.js',
 
     stats: {
       colors: true,

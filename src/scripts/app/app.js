@@ -31,10 +31,12 @@ function App(options) {
   options = options || {};
 
   var initialState = options.initialState;
+  var fetcher = options.fetcher;
 
   debug('Creating context');
   this.context = new Context({
-    routes: routes
+    routes: routes,
+    fetcher: fetcher
   });
 
   if (initialState) {
@@ -61,6 +63,17 @@ App.prototype.getComponent = function () {
   debug('Rendering Application component');
 
   return appComponent;
+};
+
+
+/*
+ * Get context
+ *
+ * @method getContext
+ * @return {Object}
+ */
+App.prototype.getActionContext = function () {
+  return this.context.getActionContext();
 };
 
 module.exports = App;
