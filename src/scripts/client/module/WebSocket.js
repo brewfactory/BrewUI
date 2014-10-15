@@ -1,6 +1,6 @@
 // Actions
-var updateTemperature = require('./../../app/actions/brewer/updateTemperature');
-var updatePWM = require('./../../app/actions/brewer/updatePWM');
+var receiveTemperature = require('./../../app/actions/brewer/receiveTemperature');
+var receivePWM = require('./../../app/actions/brewer/receivePWM');
 
 
 /*
@@ -30,7 +30,7 @@ function init(options) {
 
     var roundedTemp = Math.round(temp * 100) / 100;
 
-    context.executeAction(updateTemperature, {
+    context.executeAction(receiveTemperature, {
       temperature: roundedTemp
     });
   }
@@ -49,7 +49,7 @@ function init(options) {
 
     var roundedPWM = Math.round(pwm * 100) / 100;
 
-    context.executeAction(updatePWM, {
+    context.executeAction(receivePWM, {
       pwm: roundedPWM
     });
   }

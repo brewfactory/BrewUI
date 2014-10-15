@@ -23,8 +23,8 @@ function BrewerStore() {
 // Configure store
 BrewerStore.storeName = 'BrewerStore';
 BrewerStore.handlers = {};
-BrewerStore.handlers[BrewerConstants.ActionTypes.RECEIVE_TEMPERATURE] = 'handleTemperature';
-BrewerStore.handlers[BrewerConstants.ActionTypes.RECEIVE_PWM] = 'handlePWM';
+BrewerStore.handlers[BrewerConstants.ActionTypes.RECEIVE_TEMPERATURE] = 'temperatureUpdated';
+BrewerStore.handlers[BrewerConstants.ActionTypes.RECEIVE_PWM] = 'pwmUpdated';
 
 
 // Inherit ApplicationStore from the EventEmitter
@@ -69,12 +69,12 @@ BrewerStore.prototype.rehydrate = function (state) {
 
 
 /*
- * Handle temperature
+ * Temperature updated
  *
- * @method handleTemperature
+ * @method temperatureUpdated
  * @param {Number} temperature
  */
-BrewerStore.prototype.handleTemperature = function (temperature) {
+BrewerStore.prototype.temperatureUpdated = function (temperature) {
   this.temperature = temperature;
 
   this.emit('change');
@@ -82,12 +82,12 @@ BrewerStore.prototype.handleTemperature = function (temperature) {
 
 
 /*
- * Handle pwm
+ * PWM updated
  *
- * @method handleBrew
+ * @method pwmUpdated
  * @param {Number} pwm
  */
-BrewerStore.prototype.handlePWM = function (pwm) {
+BrewerStore.prototype.pwmUpdated = function (pwm) {
   this.pwm = pwm;
 
   this.emit('change');
