@@ -60,7 +60,8 @@ var Brewer = React.createClass({
       <div className="row">
         <div className="col-md-11">
           <div className="well well-md">
-            <h3>Temperature: {this.state.temperature}</h3>
+            <h3>Temperature: {this.state.temperature}&#176;</h3>
+            <h3>PWM: {this.state.pwm}%</h3>
           </div>
         </div>
       </div>

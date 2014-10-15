@@ -17,12 +17,14 @@ var BrewerConstants = require('../constants/BrewerConstants');
  */
 function BrewerStore() {
   this.temperature = null;
+  this.pwm = null;
 }
 
 // Configure store
 BrewerStore.storeName = 'BrewerStore';
 BrewerStore.handlers = {};
 BrewerStore.handlers[BrewerConstants.ActionTypes.RECEIVE_TEMPERATURE] = 'handleTemperature';
+BrewerStore.handlers[BrewerConstants.ActionTypes.RECEIVE_PWM] = 'handlePWM';
 
 
 // Inherit ApplicationStore from the EventEmitter
@@ -37,7 +39,8 @@ util.inherits(BrewerStore, EventEmitter);
  */
 BrewerStore.prototype.getState = function () {
   return {
-    temperature: this.temperature
+    temperature: this.temperature,
+    pwm: this.pwm
   };
 };
 
@@ -61,14 +64,15 @@ BrewerStore.prototype.dehydrate = function () {
  */
 BrewerStore.prototype.rehydrate = function (state) {
   this.temperature = state.temperature;
+  this.pwm = state.pwm;
 };
 
 
 /*
- * handleBrew
+ * Handle temperature
  *
- * @method handleBrew
- * @param {Object} brew
+ * @method handleTemperature
+ * @param {Number} temperature
  */
 BrewerStore.prototype.handleTemperature = function (temperature) {
   this.temperature = temperature;
@@ -76,5 +80,17 @@ BrewerStore.prototype.handleTemperature = function (temperature) {
   this.emit('change');
 };
 
+
+/*
+ * Handle pwm
+ *
+ * @method handleBrew
+ * @param {Number} pwm
+ */
+BrewerStore.prototype.handlePWM = function (pwm) {
+  this.pwm = pwm;
+
+  this.emit('change');
+};
 
 module.exports = BrewerStore;
