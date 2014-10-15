@@ -10,7 +10,6 @@
   "dependencies": {
     "debug": "^2.0.0",
     "dispatchr": "^0.2.7",
-    "fetchr": "^0.4.0",
     "flux-router-component": "^0.2.1",
     "lodash-node": "^2.4.1",
     "react": "^0.11.2",

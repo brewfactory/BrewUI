@@ -1,7 +1,7 @@
 module.exports = {
   Endpoints: {
     Brew: {
-      create: '/api/brew'
+      create: 'http://localhost:9003/api/brew'
     }
   }
 };

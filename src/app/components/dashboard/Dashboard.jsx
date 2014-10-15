@@ -57,12 +57,12 @@ var Dashboard = React.createClass({
    * @method render
    */
   render: function () {
-    var actualBrew = this.state.actualBrew;
+    var brew = this.state.brew;
 
     return (
       <div className="row">
         <h1>Dashboard</h1>
-        <h2>{actualBrew.name}</h2>
+        <h2>{brew.name}</h2>
         <p className="bg-warning"> TODO </p>
       </div>
     );

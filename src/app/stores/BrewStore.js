@@ -16,7 +16,7 @@ var BrewConstants = require('../constants/BrewConstants');
  * @param {Object} dispatcher
  */
 function BrewStore() {
-  this.actualBrew = {
+  this.brew = {
     name: null,
     phases: [],
     startTime: null,
@@ -27,11 +27,9 @@ function BrewStore() {
 // Configure store
 BrewStore.storeName = 'BrewStore';
 BrewStore.handlers = {};
-BrewStore.handlers[BrewConstants.ActionTypes.RECEIVE_BREW] = 'receiveBrew';
+BrewStore.handlers[BrewConstants.ActionTypes.RECEIVE_BREW] = 'handleBrew';
+BrewStore.handlers[BrewConstants.ActionTypes.CREATE_BREW] = 'handleBrew';
 
-BrewStore.brewStates = {
-  PAUSED: 'paused'
-};
 
 // Inherit ApplicationStore from the EventEmitter
 util.inherits(BrewStore, EventEmitter);
@@ -45,7 +43,7 @@ util.inherits(BrewStore, EventEmitter);
  */
 BrewStore.prototype.getState = function () {
   return {
-    actualBrew: this.actualBrew
+    brew: this.brew
   };
 };
 
@@ -68,18 +66,18 @@ BrewStore.prototype.dehydrate = function () {
  * @param {Object} state
  */
 BrewStore.prototype.rehydrate = function (state) {
-  this.actualBrew = state.actualBrew;
+  this.brew = state.brew;
 };
 
 
 /*
- * handleBrewReceive
+ * handleBrew
  *
- * @method handleBrewReceive
+ * @method handleBrew
  * @param {Object} brew
  */
-BrewStore.prototype.receiveBrew = function (brew) {
-  this.actualBrew = {
+BrewStore.prototype.handleBrew = function (brew) {
+  this.brew = {
     name: brew.name,
     phases: brew.phases,
     startTime: brew.startTime,

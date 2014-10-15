@@ -25,11 +25,13 @@ var Application = React.createClass({
   getInitialState: function () {
 
     // TODO: test only
-    var createActualBrew = require('../actions/createActualBrew');
+    var createBrew = require('../actions/createBrew');
     var context = this.props.context;
     setTimeout(function () {
-      context.executeAction(createActualBrew, {
-        name: 'Sample IPA'
+      context.executeAction(createBrew, {
+        name: 'Sample IPA',
+        phases: [{min:10, temp:1}],
+        startTime: new Date()
       });
     }, 1000);
 

@@ -19,7 +19,9 @@ window.React = React;                         // For chrome dev tool support
 debug.enable('*');
 
 bootstrapDebug('rehydrating app');
-application = new Application(dehydratedState);
+application = new Application({
+  initialState: dehydratedState
+});
 window.context = application.context;
 
 app = application.getComponent();

@@ -9,15 +9,16 @@
 var debug = require('debug');
 
 var Context = require('./lib/Context');
-var ApplicationStore = require('./stores/ApplicationStore');
-var BrewStore = require('./stores/BrewStore');
 var Application = require('./components/Application.jsx');
 var routes = require('./config/routes');
 
-var bootstrapDebug = debug('App');
+var ApplicationStore = require('./stores/ApplicationStore');
+var BrewStore = require('./stores/BrewStore');
 
+// Register stores
 Context.registerStore(ApplicationStore);
 Context.registerStore(BrewStore);
+
 
 /*
  * App
@@ -26,18 +27,22 @@ Context.registerStore(BrewStore);
  * @param {Object} initialState
  *
  */
-function App(initialState) {
-  debug('Creating context');
+function App(options) {
+  options = options || {};
 
+  var initialState = options.initialState;
+
+  debug('Creating context');
   this.context = new Context({
     routes: routes
   });
 
   if (initialState) {
-    bootstrapDebug('rehydrating context');
+    debug('rehydrating context');
     this.context.rehydrate(initialState);
   }
 }
+
 
 /*
  * Get component
