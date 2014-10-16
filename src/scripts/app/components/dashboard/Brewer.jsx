@@ -56,12 +56,22 @@ var Brewer = React.createClass({
    * @method render
    */
   render: function () {
+    var pwmProgressStyle = {
+      width: this.state.pwm + '%'
+    };
+
     return (
       <div className="row">
         <div className="col-md-12">
           <div className="well well-md">
             <h1>{this.state.temperature}&#176;</h1>
             <h4>PWM: {this.state.pwm}%</h4>
+
+            <div className="progress">
+              <div className="progress-bar progress-bar-danger" style={pwmProgressStyle}>
+                <span className="sr-only">{this.state.pwm}%</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

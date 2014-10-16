@@ -3,6 +3,8 @@ body {
     padding-bottom: 6px;
 }
 
+/* region sticky footer */
+
 html,
 body, #app, #app-container {
     height: 100%;
@@ -19,12 +21,30 @@ body, #app, #app-container {
     padding: 0 0 44px;
 }
 
+footer {
+    height: 44px;
+}
+
+/* end region sticky footer */
+
+
+/* region navigation */
+
+.navbar-inverse {
+    background-color: #1f80e3;
+    border: none;
+}
+
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-link {
+    color: #b3d9ff;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #FFF;
+}
 
 .nav li a.active {
     color: #fff;
 }
 
-
-footer {
-    height: 44px;
-}
+/* end region navigation */
