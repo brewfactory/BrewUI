@@ -71,10 +71,9 @@ var BrewPhase = React.createClass({
 
     var unit = (100 - brew.phases.length * (1 + 10)) / brewDuration;
 
-
     return (
-    <div className="progress" ng-show="actualBrew.phases">
-        {brew.phases.map(function (phase) {
+    <div className="progress">
+        {brew.phases.map(function (phase, key) {
           var phaseWidth = unit * phase.min + 10;
 
           var phaseStyle = {
@@ -97,7 +96,7 @@ var BrewPhase = React.createClass({
 
           var jobEndFormatted = phase.jobEnd ? moment(phase.jobEnd).format('HH:mm') : '';
 
-          return <span>
+          return <span key={key}>
                   <div className={dividerClasses} style={dividerStyle}>
                     <span className="sr-only">wait</span>
                   </div>

@@ -8,6 +8,7 @@
     "test": "exit 0"
   },
   "dependencies": {
+    "chart.js": "^1.0.1-beta.2",
     "debug": "^2.0.0",
     "dispatchr": "^0.2.7",
     "flux-router-component": "^0.2.1",

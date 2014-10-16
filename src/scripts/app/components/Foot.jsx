@@ -30,7 +30,7 @@ var Foot = React.createClass({
    */
   render: function () {
     return (
-      <footer class="container">
+      <footer className="container">
         <p className="text-center">We ♥ Beer | Brewfactory</p>
       </footer>
     );
