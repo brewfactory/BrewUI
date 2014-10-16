@@ -2,6 +2,8 @@
 var receiveTemperature = require('./../../app/actions/brewer/receiveTemperature');
 var receivePWM = require('./../../app/actions/brewer/receivePWM');
 
+var receiveBrew = require('./../../app/actions/brew/receiveBrew');
+
 
 /*
  * init
@@ -55,9 +57,21 @@ function init(options) {
   }
 
 
+  /*
+   * On brew changed
+   *
+   * @method onBrewChanged
+   * @param {Number} brew
+   */
+  function onBrewChanged(brew) {
+    context.executeAction(receiveBrew, brew);
+  }
+
+
   // Events
   socket.on('temperature_changed', onTemperatureChanged);
   socket.on('pwm_changed', onPWMChanged);
+  socket.on('brew_changed', onBrewChanged);
 }
 
 module.exports = init;

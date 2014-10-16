@@ -20,15 +20,16 @@ function BrewStore() {
     name: null,
     phases: [],
     startTime: null,
-    state: null
+    state: null,
+    paused: false
   };
 }
 
 // Configure store
 BrewStore.storeName = 'BrewStore';
 BrewStore.handlers = {};
-BrewStore.handlers[BrewConstants.ActionTypes.RECEIVE_BREW] = 'handleBrew';
-BrewStore.handlers[BrewConstants.ActionTypes.CREATE_BREW] = 'handleBrew';
+BrewStore.handlers[BrewConstants.ActionTypes.RECEIVE_BREW] = 'brewUpdated';
+BrewStore.handlers[BrewConstants.ActionTypes.CREATE_BREW] = 'brewUpdated';
 
 
 // Inherit ApplicationStore from the EventEmitter
@@ -71,12 +72,12 @@ BrewStore.prototype.rehydrate = function (state) {
 
 
 /*
- * handleBrew
+ * Brew updated
  *
- * @method handleBrew
+ * @method brewUpdated
  * @param {Object} brew
  */
-BrewStore.prototype.handleBrew = function (brew) {
+BrewStore.prototype.brewUpdated = function (brew) {
   this.brew = {
     name: brew.name,
     phases: brew.phases,
