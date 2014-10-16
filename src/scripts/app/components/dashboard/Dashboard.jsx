@@ -7,6 +7,7 @@ var debug = require('debug')('BrewUI:Dashboard');
 var navigateAction = require('flux-router-component').navigateAction;
 
 var Brewer = require('./Brewer.jsx');
+var BrewPhase = require('./BrewPhase.jsx');
 
 var Dashboard = React.createClass({
 
@@ -62,16 +63,24 @@ var Dashboard = React.createClass({
     var brew = this.state.brew;
 
     return (
-      <div className="row">
-        <div className="col-md-8">
-          <h1>Dashboard</h1>
-          <h2>{brew.name}</h2>
-          <p className="bg-warning"> TODO </p>
+      <section>
+        <div className="row">
+          <div className="col-md-12">
+            <BrewPhase context={this.props.context} />
           </div>
-        <div className="col-md-4">
-          <Brewer context={this.props.context} />
-         </div>
-      </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-8">
+            <h1>Dashboard</h1>
+            <h2>{brew.name}</h2>
+            <p className="bg-warning"> TODO </p>
+          </div>
+          <div className="col-md-4">
+            <Brewer context={this.props.context} />
+          </div>
+        </div>
+      </section>
     );
   }
 });

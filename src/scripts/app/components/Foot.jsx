@@ -30,10 +30,8 @@ var Foot = React.createClass({
    */
   render: function () {
     return (
-      <footer>
-        <div className="container">
-          <p className="text-center">We ♥ Beer | Brewfactory</p>
-        </div>
+      <footer class="container">
+        <p className="text-center">We ♥ Beer | Brewfactory</p>
       </footer>
     );
   }

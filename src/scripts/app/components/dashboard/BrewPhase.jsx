@@ -3,9 +3,9 @@
 /* jshint ignore:start */
 
 var React = require('react/addons');
-var debug = require('debug')('BrewUI:Brewer');
+var debug = require('debug')('BrewUI:BrewPhase');
 
-var Brewer = React.createClass({
+var BrewPhase = React.createClass({
 
   /*
    * Get initial state
@@ -14,7 +14,7 @@ var Brewer = React.createClass({
    * @return {Object} state
    */
   getInitialState: function () {
-    this.store = this.props.context.getStore('BrewerStore');
+    this.store = this.props.context.getStore('BrewStore');
     return this.store.getState();
   },
 
@@ -56,17 +56,18 @@ var Brewer = React.createClass({
    * @method render
    */
   render: function () {
+    var phaseStyle = {
+      width: '35%'
+    };
+
     return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="well well-md">
-            <h1>{this.state.temperature}&#176;</h1>
-            <h4>PWM: {this.state.pwm}%</h4>
-          </div>
+      <div className="progress">
+        <div className="progress-bar progress-bar-success" style={phaseStyle}>
+          <span className="sr-only">{phaseStyle.width}</span>
         </div>
       </div>
     );
   }
 });
 
-module.exports = Brewer;
+module.exports = BrewPhase;

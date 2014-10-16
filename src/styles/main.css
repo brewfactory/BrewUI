@@ -1,0 +1,30 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 6px;
+}
+
+html,
+body, #app, #app-container {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto;
+    /* Negative indent footer by its height */
+    margin: 0 auto -44px;
+    /* Pad bottom by footer height (with padding) */
+    padding: 0 0 44px;
+}
+
+
+.nav li a.active {
+    color: #fff;
+}
+
+
+footer {
+    height: 44px;
+}
