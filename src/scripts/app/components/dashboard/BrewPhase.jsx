@@ -4,6 +4,7 @@
 
 var React = require('react/addons');
 var debug = require('debug')('BrewUI:BrewPhase');
+var moment = require('moment');
 
 var BrewPhase = React.createClass({
 
@@ -94,15 +95,17 @@ var BrewPhase = React.createClass({
             'progress-bar-inactive': !phase.inProgress && !phase.tempReached
           });
 
-          return <div>
-        <div className={dividerClasses} style={dividerStyle}>
-          <span className="sr-only">wait</span>
-        </div>
+          var jobEndFormatted = phase.jobEnd ? moment(phase.jobEnd).format('HH:mm') : '';
 
-        <div className={phaseClasses} style={phaseStyle}>
-          <span>{phase.min} min, {phase.temp}&deg; {phase.jobEnd}</span>
-        </div>
-      </div>
+          return <span>
+                  <div className={dividerClasses} style={dividerStyle}>
+                    <span className="sr-only">wait</span>
+                  </div>
+
+                  <div className={phaseClasses} style={phaseStyle}>
+                    <span>{phase.min} min, {phase.temp}&deg; {jobEndFormatted}</span>
+                  </div>
+                </span>
         })}
     </div>
     );

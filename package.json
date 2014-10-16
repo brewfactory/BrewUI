@@ -12,6 +12,7 @@
     "dispatchr": "^0.2.7",
     "flux-router-component": "^0.2.1",
     "lodash-node": "^2.4.1",
+    "moment": "^2.8.3",
     "react": "^0.11.2",
     "routr": "^0.0.3",
     "socket.io-client": "^1.1.0",

@@ -48,3 +48,16 @@ footer {
 }
 
 /* end region navigation */
+
+
+/* region brew phases */
+
+.progress-bar-inactive {
+    background-color: #e0e0e0;
+}
+
+.progress-bar-inactive2 {
+    background-color: #cccccc;
+}
+
+/* end region brew phases */
