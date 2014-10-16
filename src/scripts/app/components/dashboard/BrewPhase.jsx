@@ -56,16 +56,55 @@ var BrewPhase = React.createClass({
    * @method render
    */
   render: function () {
-    var phaseStyle = {
-      width: '35%'
+    var cx = React.addons.classSet;
+    var brew = this.store.brew;
+
+    var dividerStyle = {
+      width: '1%'
     };
 
+    var brewDuration = brew.phases.reduce(function (sum, phase) {
+      sum += +phase.min;
+      return sum;
+    }, 0);
+
+    var unit = (100 - brew.phases.length * (1 + 10)) / brewDuration;
+
+
     return (
-      <div className="progress">
-        <div className="progress-bar progress-bar-success" style={phaseStyle}>
-          <span className="sr-only">{phaseStyle.width}</span>
+    <div className="progress" ng-show="actualBrew.phases">
+        {brew.phases.map(function (phase) {
+          var phaseWidth = unit * phase.min + 10;
+
+          var phaseStyle = {
+            width: phaseWidth+ '%'
+          };
+
+          var dividerClasses = cx({
+            'progress-bar': true,
+            'active progress-striped progress-bar-danger': phase.inProgress && !phase.tempReached,
+            'progress-bar-inactive2': !phase.inProgress
+          });
+
+          var phaseClasses = cx({
+            'progress-bar': true,
+            'progress-bar-success': phase.tempReached && !phase.inProgress,
+            'progress-bar-warning': phase.inProgress && !phase.tempReached,
+            'progress-striped active': phase.inProgress && phase.tempReached,
+            'progress-bar-inactive': !phase.inProgress && !phase.tempReached
+          });
+
+          return <div>
+        <div className={dividerClasses} style={dividerStyle}>
+          <span className="sr-only">wait</span>
+        </div>
+
+        <div className={phaseClasses} style={phaseStyle}>
+          <span>{phase.min} min, {phase.temp}&deg; {phase.jobEnd}</span>
         </div>
       </div>
+        })}
+    </div>
     );
   }
 });
