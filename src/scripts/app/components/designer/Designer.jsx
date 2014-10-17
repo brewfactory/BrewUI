@@ -3,13 +3,9 @@
 /* jshint ignore:start */
 
 var React = require('react/addons');
-var debug = require('debug')('BrewUI:Dashboard');
+var debug = require('debug')('BrewUI:Designer');
 
-var ActualBrew = require('./ActualBrew.jsx');
-var Brewer = require('./Brewer.jsx');
-var BrewPhase = require('./BrewPhase.jsx');
-
-var Dashboard = React.createClass({
+var Designer = React.createClass({
 
   /*
    * Get initial state
@@ -60,22 +56,11 @@ var Dashboard = React.createClass({
    * @method render
    */
   render: function () {
-    var brew = this.state.brew;
-
     return (
       <section>
         <div className="row">
           <div className="col-md-12">
-            <BrewPhase brew={brew} />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-8">
-            <ActualBrew context={this.props.context} brew={brew} />
-          </div>
-          <div className="col-md-4">
-            <Brewer context={this.props.context} />
+            <p> TODO</p>
           </div>
         </div>
       </section>
@@ -83,4 +68,4 @@ var Dashboard = React.createClass({
   }
 });
 
-module.exports = Dashboard;
+module.exports = Designer;

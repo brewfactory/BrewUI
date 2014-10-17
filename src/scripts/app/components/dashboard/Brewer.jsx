@@ -44,7 +44,7 @@ var Brewer = React.createClass({
    *
    * @method _onChange;
    */
-  _onChange: function() {
+  _onChange: function () {
     var state = this.store.getState();
     this.setState(state);
   },
@@ -56,23 +56,37 @@ var Brewer = React.createClass({
    * @method render
    */
   render: function () {
-    var pwmProgressStyle = {
-      width: this.state.pwm + '%'
-    };
+    var pwmProgressStyle;
+    var status;
+
+    if (this.state.pwm) {
+      pwmProgressStyle = {
+        width: this.state.pwm + '%'
+      };
+
+      status =
+        <div className="well well-md">
+          <h1>{this.state.temperature}&#176;</h1>
+          <h4>PWM: {this.state.pwm}%</h4>
+
+          <div className="progress">
+            <div className="progress-bar progress-bar-danger" style={pwmProgressStyle}>
+              <span className="sr-only">{this.state.pwm}%</span>
+            </div>
+          </div>
+        </div>;
+    } else {
+      status =
+        <div className="well well-md">
+          <p><strong>We are not brewing :(</strong></p>
+          <p>How is it possible</p>
+        </div>
+    }
 
     return (
       <div className="row">
         <div className="col-md-12">
-          <div className="well well-md">
-            <h1>{this.state.temperature}&#176;</h1>
-            <h4>PWM: {this.state.pwm}%</h4>
-
-            <div className="progress">
-              <div className="progress-bar progress-bar-danger" style={pwmProgressStyle}>
-                <span className="sr-only">{this.state.pwm}%</span>
-              </div>
-            </div>
-          </div>
+          {status}
         </div>
       </div>
     );

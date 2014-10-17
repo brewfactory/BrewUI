@@ -8,7 +8,6 @@ var moment = require('moment');
 
 var BrewPhase = React.createClass({
 
-
   /*
    * Render
    *
@@ -28,6 +27,11 @@ var BrewPhase = React.createClass({
     }, 0);
 
     var unit = (100 - brew.phases.length * (1 + 10)) / brewDuration;
+
+    // No brew
+    if(!brew.phases.length) {
+      return (<span/>);
+    }
 
     return (
     <div className="progress">

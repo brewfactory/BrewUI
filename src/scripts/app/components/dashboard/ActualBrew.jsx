@@ -6,7 +6,23 @@ var React = require('react/addons');
 var debug = require('debug')('BrewUI:ActualBrew');
 var moment = require('moment');
 
+var navigateAction = require('flux-router-component').navigateAction;
+
 var ActualBrew = React.createClass({
+
+  /*
+   * On designer button click
+   *
+   * @method onDesignerBtnClick
+   */
+  onDesignerBtnClick: function () {
+    debug('designer button click');
+
+    this.props.context.executeAction(navigateAction, {
+      path: '/designer'
+    });
+  },
+
 
   /*
    * Render
@@ -18,6 +34,13 @@ var ActualBrew = React.createClass({
 
     var brew = this.props.brew;
     var startTimeFormatted = brew.startTime ? moment(brew.startTime).format('YYYY-MM-dd HH:mm') : '';
+
+    // No brew in progress
+    if(!brew.name) {
+      return (
+        <button onClick={this.onDesignerBtnClick} className="btn btn-default">Create a brew first</button>
+      )
+    }
 
     return (
       <section className="panel panel-default panel-actual-brew">

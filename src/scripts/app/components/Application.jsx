@@ -10,6 +10,7 @@ var RouterMixin = require('flux-router-component').RouterMixin;
 var Nav = require('./Nav.jsx');
 var Foot = require('./Foot.jsx');
 var Dashboard = require('./dashboard/Dashboard.jsx');
+var Designer = require('./designer/Designer.jsx');
 var Log = require('./log/Log.jsx');
 
 var Application = React.createClass({
@@ -82,6 +83,9 @@ var Application = React.createClass({
     switch (this.state.currentPageName) {
       case 'log':
         page = <Log context={this.props.context} />;
+        break;
+      case 'designer':
+        page = <Designer context={this.props.context} />;
         break;
       default:
         page = <Dashboard context={this.props.context} />;

@@ -11,6 +11,12 @@ module.exports = {
     method: 'get',
     page: 'dashboard'
   },
+  designer: {
+    name: 'Designer',
+    path: '/designer',
+    method: 'get',
+    page: 'designer'
+  },
   log: {
     name: 'Logs',
     path: '/log',
