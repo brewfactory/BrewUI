@@ -61,3 +61,7 @@ footer {
 }
 
 /* end region brew phases */
+
+.panel.panel-actual-brew .panel-footer {
+    background-color: #fff;
+}

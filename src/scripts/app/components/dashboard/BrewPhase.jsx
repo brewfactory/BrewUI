@@ -8,48 +8,6 @@ var moment = require('moment');
 
 var BrewPhase = React.createClass({
 
-  /*
-   * Get initial state
-   *
-   * @method getInitialState
-   * @return {Object} state
-   */
-  getInitialState: function () {
-    this.store = this.props.context.getStore('BrewStore');
-    return this.store.getState();
-  },
-
-
-  /*
-   * Component did mount
-   *
-   * @method componentDidMount
-   */
-  componentDidMount: function () {
-    this.store.on('change', this._onChange);
-  },
-
-
-  /*
-   * Component will unmount
-   *
-   * @method componentWillUnmount
-   */
-  componentWillUnmount: function () {
-    this.store.removeListener('change', this._onChange);
-  },
-
-
-  /**
-   * Event handler for 'change' events coming from the Store
-   *
-   * @method _onChange;
-   */
-  _onChange: function() {
-    var state = this.store.getState();
-    this.setState(state);
-  },
-
 
   /*
    * Render
@@ -58,7 +16,7 @@ var BrewPhase = React.createClass({
    */
   render: function () {
     var cx = React.addons.classSet;
-    var brew = this.store.brew;
+    var brew = this.props.brew;
 
     var dividerStyle = {
       width: '1%'

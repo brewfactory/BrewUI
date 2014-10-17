@@ -44,13 +44,3 @@ require('./module/WebSocket')({
   server: 'http://localhost:9003',
   context: application.getActionContext()
 });
-
-// TODO: test only
-var createBrew = require('./../app/actions/brew/createBrew');
-setTimeout(function () {
-  application.getActionContext().executeAction(createBrew, {
-    name: 'Sample IPA',
-    phases: [{min:2, temp:50}, {min:30, temp:65}, {min:20, temp:72}, {min:60, temp:100}],
-    startTime: new Date()
-  });
-}, 1000);

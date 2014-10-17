@@ -6,6 +6,7 @@ var React = require('react/addons');
 var debug = require('debug')('BrewUI:Dashboard');
 var navigateAction = require('flux-router-component').navigateAction;
 
+var ActualBrew = require('./ActualBrew.jsx');
 var Brewer = require('./Brewer.jsx');
 var BrewPhase = require('./BrewPhase.jsx');
 
@@ -66,15 +67,13 @@ var Dashboard = React.createClass({
       <section>
         <div className="row">
           <div className="col-md-12">
-            <BrewPhase context={this.props.context} />
+            <BrewPhase brew={brew} />
           </div>
         </div>
 
         <div className="row">
           <div className="col-md-8">
-            <h1>Dashboard</h1>
-            <h2>{brew.name}</h2>
-            <p className="bg-warning"> TODO </p>
+            <ActualBrew brew={brew} />
           </div>
           <div className="col-md-4">
             <Brewer context={this.props.context} />
