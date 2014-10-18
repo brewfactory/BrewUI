@@ -15,37 +15,79 @@ var Designer = React.createClass({
    */
   getInitialState: function () {
     this.store = this.props.context.getStore('BrewStore');
-    return this.store.getState();
+
+    return {
+      name: null,
+      startTime: new Date(),
+      phases: []
+    };
   },
 
 
   /*
-   * Component did mount
+   * On clone actual btn click
    *
-   * @method componentDidMount
+   * @method onCloneActualBtnClick
    */
-  componentDidMount: function () {
-    this.store.on('change', this._onChange);
-  },
-
-
-  /*
-   * Component will unmount
-   *
-   * @method componentWillUnmount
-   */
-  componentWillUnmount: function () {
-    this.store.removeListener('change', this._onChange);
-  },
-
-
-  /**
-   * Event handler for 'change' events coming from the Store
-   *
-   * @method _onChange;
-   */
-  _onChange: function() {
+  onCloneActualBtnClick: function () {
     var state = this.store.getState();
+
+    this.setState({
+      name: state.brew.name,
+      startTime: new Date(state.brew.startTime),
+      phases: state.brew.phases.map(function (phase) {
+        return {
+          min: phase.min,
+          temp: phase.temp
+        }
+      })
+    });
+  },
+
+
+  /*
+   * On reset btn click
+   *
+   * @method onResetBtnClick
+   */
+  onResetBtnClick: function () {
+    this.setState(this.getInitialState());
+  },
+
+
+  /*
+   * On phase add btn click
+   *
+   * @method onPhaseAddBtnClick
+   */
+  onPhaseAddBtnClick: function (isDown) {
+    var state = this.state;
+    var phase = {
+      min: null,
+      temp: null
+    };
+
+    if(isDown) {
+      state.phases.push(phase);
+    } else {
+      state.phases.unshift(phase);
+    }
+
+    this.setState(state);
+  },
+
+
+  /*
+   * On phase remove btn click
+   *
+   * @method onPhaseRemoveBtnClick
+   */
+    onPhaseRemoveBtnClick: function (phase) {
+    var state = this.state;
+    var idx = state.phases.indexOf(phase);
+
+    state.phases.splice(idx, 1);
+
     this.setState(state);
   },
 
@@ -56,12 +98,72 @@ var Designer = React.createClass({
    * @method render
    */
   render: function () {
+    var _this = this;
+    var state = _this.state;
+
     return (
-      <section>
-        <div className="row">
-          <div className="col-md-12">
-            <p> TODO</p>
-          </div>
+      <section className="row">
+        <div className="col-md-12">
+          <p>
+            <button onClick={_this.onCloneActualBtnClick} type="button" className="btn btn-success">Clone atual</button>
+          &nbsp;
+            <button onClick={_this.onResetBtnClick} type="button" className="btn btn-default">Reset</button>
+          </p>
+
+          <form name="brewForm">
+            <div className="form-group">
+              <label htmlFor="name">
+                <strong>Name</strong>
+              </label>
+              <input value={state.name} id="name" type="text" placeholder="name" min="0"
+                required className="form-control" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="startTime" className="control-label">Time</label>
+              <input value={state.startTime} id="startTime" type="text"
+                className="form-control" size="8" name="time" placeholder="start time" />
+            </div>
+          </form>
+
+          <p>
+            <button onClick={_this.onPhaseAddBtnClick.bind(_this, false)} type="button" className="btn btn-default">Add phase top</button>&nbsp;
+            <button onClick={_this.onPhaseAddBtnClick.bind(_this, true)} type="button" className="btn btn-default">Add phase down</button>
+          </p>
+
+          <table className="table table-hover" ng-show="brew.phases.length">
+            <thead>
+              <tr>
+                <th>Min</th>
+                <th>Temp</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+
+            {state.phases.map(function (phase, key) {
+              return <tr key={key}>
+                <td>
+                  <div className="input-group">
+                    <input value={phase.min}  className="form-control" type="number" min="0" placeholder="min" />
+                    <span className="input-group-addon">min</span>
+                  </div>
+                </td>
+                <td>
+                  <div className="input-group">
+                    <input value={phase.temp} className="form-control" type="number" min="0" step="any" placeholder="C&deg;" />
+                    <span className="input-group-addon">C&deg;</span>
+                  </div>
+                </td>
+                <td>
+                  <button onClick={_this.onPhaseRemoveBtnClick.bind(_this, phase)} className="btn btn-mini btn-danger" type="button" title="Remove">
+                  Remove
+                  </button>
+                </td>
+              </tr>
+            })}
+            </tbody>
+          </table>
         </div>
       </section>
     );
