@@ -8,6 +8,7 @@ var debug = require('debug')('BrewUI:Dashboard');
 var ActualBrew = require('./ActualBrew.jsx');
 var Brewer = require('./Brewer.jsx');
 var BrewPhase = require('./BrewPhase.jsx');
+var BrewerControl = require('./BrewerControl.jsx');
 
 var Dashboard = React.createClass({
 
@@ -76,6 +77,7 @@ var Dashboard = React.createClass({
           </div>
           <div className="col-md-4">
             <Brewer context={this.props.context} />
+            <BrewerControl brew={brew} />
           </div>
         </div>
       </section>
