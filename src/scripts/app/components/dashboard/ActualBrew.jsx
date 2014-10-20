@@ -36,7 +36,7 @@ var ActualBrew = React.createClass({
     var startTimeFormatted = brew.startTime ? moment(brew.startTime).format('YYYY-MM-dd HH:mm') : '';
 
     // No brew in progress
-    if(!brew.name) {
+    if(!brew.name && !brew.phases.length) {
       return (
         <button onClick={this.onDesignerBtnClick} className="btn btn-default">Create a brew first</button>
       )

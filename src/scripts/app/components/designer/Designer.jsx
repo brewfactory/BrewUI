@@ -6,6 +6,8 @@ var React = require('react/addons');
 var moment = require('moment');
 var debug = require('debug')('BrewUI:Designer');
 
+var createBrewAction = require('../../actions/brew/createBrew');
+
 var Designer = React.createClass({
 
   /*
@@ -35,7 +37,7 @@ var Designer = React.createClass({
 
     this.setState({
       name: state.brew.name,
-      startTime: new Date(state.brew.startTime),
+      startTime: state.brew.startTime ? new Date(state.brew.startTime) : new Date(),
       phases: state.brew.phases.map(function (phase) {
         return {
           min: phase.min,
@@ -99,7 +101,73 @@ var Designer = React.createClass({
    * @method onSyncBtnClicked
    */
   onSyncBtnClicked: function () {
+    this.props.context.executeAction(createBrewAction, {
+      name: this.state.name,
+      startTime: this.state.startTime,
+      phases: this.state.phases
+    });
+  },
 
+
+  /*
+   * On name input has changed
+   *
+   * @method onNameChanged
+   * @param {Event} event
+   */
+  onNameChanged: function(event) {
+    this.setState({
+      name: event.target.value
+    });
+  },
+
+
+  /*
+   * On startTime input has changed
+   *
+   * @method onStartTimeChanged
+   * @param {Event} event
+   */
+  onStartTimeChanged: function(event) {
+    this.setState({
+      startTime: moment(event.target.value).toDate()
+    });
+  },
+
+
+  /*
+   * On phase duration changed
+   *
+   * @method onPhaseDurationChanged
+   * @param {Event} event
+   * @param {Number} phaseKey
+   */
+  onPhaseDurationChanged: function (phaseKey, event) {
+    var phases = this.state.phases;
+
+    phases[phaseKey].min = Number(event.target.value);
+
+    this.setState({
+      phases: phases
+    });
+  },
+
+
+  /*
+   * On phase temp changed
+   *
+   * @method onPhaseDurationChanged
+   * @param {Event} event
+   * @param {Number} phaseKey
+   */
+  onPhaseTempChanged: function (phaseKey, event) {
+    var phases = this.state.phases;
+
+    phases[phaseKey].temp = Number(event.target.value);
+
+    this.setState({
+      phases: phases
+    });
   },
 
 
@@ -129,19 +197,21 @@ var Designer = React.createClass({
             return <tr key={key}>
               <td>
                 <div className="input-group">
-                  <input value={phase.min}  className="form-control" type="number" min="0" placeholder="min" />
+                  <input onChange={_this.onPhaseDurationChanged.bind(_this, key)} value={phase.min}
+                    className="form-control" type="number" min="0" placeholder="min" />
                   <span className="input-group-addon">min</span>
                 </div>
               </td>
               <td>
                 <div className="input-group">
-                  <input value={phase.temp} className="form-control" type="number" min="0" step="any" placeholder="C&deg;" />
+                  <input onChange={_this.onPhaseTempChanged.bind(_this, key)} value={phase.temp}
+                    className="form-control" type="number" min="0" placeholder="C&deg;" />
                   <span className="input-group-addon">C&deg;</span>
                 </div>
               </td>
               <td>
-                <button onClick={_this.onPhaseRemoveBtnClick.bind(_this,
-                  phase)} className="btn btn-mini btn-danger" type="button" title="Remove">
+                <button onClick={_this.onPhaseRemoveBtnClick.bind(_this, phase)}
+                  className="btn btn-mini btn-danger" type="button" title="Remove">
                 Remove
                 </button>
               </td>
@@ -155,7 +225,7 @@ var Designer = React.createClass({
       <section className="row designer">
         <div className="col-md-12">
           <p>
-            <button onClick={_this.onCloneActualBtnClick} type="button" className="btn btn-success">Clone atual</button>
+            <button onClick={_this.onCloneActualBtnClick} type="button" className="btn btn-success">Clone actual</button>
           &nbsp;
             <button onClick={_this.onResetBtnClick} type="button" className="btn btn-default">Reset</button>
           </p>
@@ -165,13 +235,13 @@ var Designer = React.createClass({
               <label htmlFor="name">
                 <strong>Name</strong>
               </label>
-              <input value={state.name} id="name" type="text" placeholder="name" min="0"
+              <input onChange={_this.onNameChanged} value={state.name} id="name" type="text" placeholder="name" min="0"
                 required className="form-control" />
             </div>
 
             <div className="form-group">
               <label htmlFor="startTime" className="control-label">Start time</label>
-              <input value={startTimeFormatted} id="startTime" type="datetime-local"
+              <input onChange={_this.onStartTimeChanged} value={startTimeFormatted} id="startTime" type="datetime-local"
                 className="form-control" size="8" name="time" placeholder="start time" />
             </div>
           </form>
