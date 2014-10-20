@@ -65,3 +65,11 @@ footer {
 .panel.panel-actual-brew .panel-footer {
     background-color: #fff;
 }
+
+.designer .panel.phases .panel-footer {
+    background-color: #fff;
+}
+
+.designer .panel.panel-info.phases .panel-footer {
+    border-color: #bce8f1;
+}
