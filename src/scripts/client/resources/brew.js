@@ -17,7 +17,6 @@ var STATE = {
  *
  * @method create
  * @param {Object} brew
- * @callback
  */
 function create(options) {
   options = options || {};
@@ -44,6 +43,54 @@ function create(options) {
   });
 }
 
+
+/*
+ * Pause
+ *
+ * @method pause
+ */
+function pause() {
+
+  return new Promise(function (resolve, reject) {
+
+    request
+        .patch(APIConstants.Endpoints.Brew.pause)
+        .set('Accept', 'application/json')
+        .end(function (res) {
+          if (!res.ok) {
+            return reject();
+          }
+
+          resolve();
+        });
+  });
+}
+
+
+/*
+ * Stop
+ *
+ * @method pause
+ */
+function stop() {
+
+  return new Promise(function (resolve, reject) {
+
+    request
+        .patch(APIConstants.Endpoints.Brew.stop)
+        .set('Accept', 'application/json')
+        .end(function (res) {
+          if (!res.ok) {
+            return reject();
+          }
+
+          resolve();
+        });
+  });
+}
+
 // Public
 exports.create = create;
+exports.pause = pause;
+exports.stop = stop;
 exports.STATE = STATE;

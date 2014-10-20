@@ -5,7 +5,30 @@
 var React = require('react/addons');
 var debug = require('debug')('BrewUI:Brewer');
 
+var pauseBrewAction = require('../../actions/brew/pauseBrew');
+var stopBrewAction = require('../../actions/brew/stopBrew');
+
 var BrewerControl = React.createClass({
+
+  /*
+   * On pause button click
+   *
+   * @method onPauseBtnClick
+   */
+  onPauseBtnClick: function () {
+    this.props.context.executeAction(pauseBrewAction);
+  },
+
+
+  /*
+   * On stop button click
+   *
+   * @method onStopBtnClick
+   */
+  onStopBtnClick: function () {
+    this.props.context.executeAction(stopBrewAction);
+  },
+
 
   /*
    * Render
@@ -20,10 +43,10 @@ var BrewerControl = React.createClass({
       // actualBrew.paused
       status =
         <div className="well well-md">
-        {brew.paused ? <button className="btn btn-primary">Resume</button> :
-          <button className="btn btn-default">Pause</button>}
+        {brew.paused ? <button onClick={this.onPauseBtnClick} className="btn btn-primary">Resume</button> :
+          <button onClick={this.onPauseBtnClick} className="btn btn-default">Pause</button>}
         &nbsp;
-          <button className="btn btn-danger">Stop</button>
+          <button onClick={this.onStopBtnClick}  className="btn btn-danger">Stop</button>
         </div>;
     } else {
       status =

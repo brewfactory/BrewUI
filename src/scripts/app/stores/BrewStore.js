@@ -82,7 +82,8 @@ BrewStore.prototype.brewUpdated = function (brew) {
     name: brew.name,
     phases: brew.phases,
     startTime: brew.startTime,
-    state: brew.state
+    state: brew.state,
+    paused: !!brew.paused
   };
 
   this.emit('change');

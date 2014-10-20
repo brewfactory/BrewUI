@@ -77,7 +77,7 @@ var Dashboard = React.createClass({
           </div>
           <div className="col-md-4">
             <Brewer context={this.props.context} />
-            <BrewerControl brew={brew} />
+            <BrewerControl brew={brew} context={this.props.context} />
           </div>
         </div>
       </section>

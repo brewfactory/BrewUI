@@ -3,6 +3,8 @@ var keyMirror = require('react/lib/keyMirror');
 module.exports = {
   ActionTypes: keyMirror({
     RECEIVE_BREW: null,
-    CREATE_BREW: null
+    CREATE_BREW: null,
+    PAUSE_BREW: null,
+    STOP_BREW: null
   })
 };

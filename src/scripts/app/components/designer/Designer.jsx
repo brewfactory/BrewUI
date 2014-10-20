@@ -252,11 +252,11 @@ var Designer = React.createClass({
             {state.phases.length ? phasesComponent : <i>Add new phase first.</i> }
             </div>
             <div className="panel-footer">
+              <button onClick={_this.onPhaseAddBtnClick.bind(_this,  true)}
+                  type="button" className="btn btn-default">Add phase down</button>
+            &nbsp;
               <button onClick={_this.onPhaseAddBtnClick.bind(_this, false)}
                 type="button" className="btn btn-default">Add phase top</button>
-            &nbsp;
-              <button onClick={_this.onPhaseAddBtnClick.bind(_this,  true)} t
-                ype="button" className="btn btn-default">Add phase down</button>
             </div>
           </section>
 

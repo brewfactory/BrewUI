@@ -19,7 +19,7 @@ module.exports = function (context, payload, done) {
   // Create
   brewFetcher.create(brew, {})
     .then(function () {
-      debug('dispatching CREATE_BREW_SUCCESS', brew);
+      //debug('dispatching CREATE_BREW_SUCCESS', brew);
       //context.dispatch('RECEIVE_MESSAGES_SUCCESS', [brew]);
 
       if(typeof done === 'function') {
@@ -29,7 +29,7 @@ module.exports = function (context, payload, done) {
     .catch(function (err) {
       debug(err);
 
-      debug('dispatching CREATE_BREW_FAILURE', brew);
+      //debug('dispatching CREATE_BREW_FAILURE', brew);
       //context.dispatch('RECEIVE_MESSAGES_FAILURE', [brew]);
 
       if(typeof done === 'function') {

@@ -59,7 +59,7 @@ var Brewer = React.createClass({
     var pwmProgressStyle;
     var status;
 
-    if (this.state.pwm) {
+    if (!isNaN(this.state.pwm)) {
       pwmProgressStyle = {
         width: this.state.pwm + '%'
       };
