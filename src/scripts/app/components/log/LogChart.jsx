@@ -88,7 +88,7 @@ var LogChart = React.createClass({
         }
 
         chartData.labels.push(dateLabel);
-        dataSet.data.push(log[valueField]);
+        dataSet.data.push(Math.round(log[valueField] * 100) / 100);
       }
     });
 

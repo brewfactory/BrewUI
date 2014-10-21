@@ -102,6 +102,7 @@ var Log = React.createClass({
     var tempChart =
     <div className="row">
       <div className="col-md-12">
+        <h4>Temperature</h4>
         {selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="temp" /> : <span/> }
       </div>
     </div>;
@@ -109,6 +110,7 @@ var Log = React.createClass({
     var pwmChart =
     <div className="row">
       <div className="col-md-12">
+        <h4>PWM</h4>
         {selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="pwm" /> : <span/> }
       </div>
     </div>;
