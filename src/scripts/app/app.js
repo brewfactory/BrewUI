@@ -12,11 +12,13 @@ var Context = require('./lib/Context');
 var Application = require('./components/Application.jsx');
 var routes = require('./config/routes');
 
+var findBrewLogAction = require('./actions/logs/findBrew');
 
 // Register stores
 Context.registerStore(require('./stores/ApplicationStore'));
 Context.registerStore(require('./stores/BrewStore'));
 Context.registerStore(require('./stores/BrewerStore'));
+Context.registerStore(require('./stores/LogStore'));
 
 
 /*
@@ -42,6 +44,8 @@ function App(options) {
     debug('rehydrating context');
     this.context.rehydrate(initialState);
   }
+
+  this.context.getActionContext().executeAction(findBrewLogAction);
 }
 
 

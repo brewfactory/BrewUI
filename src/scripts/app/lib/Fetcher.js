@@ -22,7 +22,7 @@ function register(name, fetcher) {
  */
 function get(name) {
   if(!fetchers[name]) {
-    throw new Error('Register first');
+    throw new Error('Register the fetcher first: ' + name);
   }
 
   return fetchers[name];

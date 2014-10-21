@@ -22,6 +22,7 @@ var fetcher = require('../app/lib/Fetcher');
 
 // Register fetchers
 fetcher.register('brew', require('./fetchers/brew'));
+fetcher.register('log', require('./fetchers/log'));
 
 clientDebug('rehydrating app');
 
