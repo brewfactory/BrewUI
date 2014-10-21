@@ -6,7 +6,7 @@ var React = require('react/addons');
 var moment = require('moment');
 var debug = require('debug')('BrewUI:Dashboard');
 
-var TempChart = require('./TempChart.jsx');
+var LogChart = require('./LogChart.jsx');
 
 var findOneBrewLogAction = require('../../actions/logs/findOneBrew');
 
@@ -86,26 +86,40 @@ var Log = React.createClass({
     var brewLogs = this.store.brewLogs;
     var selectedBrewLog = this.store.selectedBrewLog;
 
+    var brewSelector =
+    <div className="form-group">
+      <label htmlFor="log" className="control-label">Subject</label>
+      <select value={this.state.selectedBrewId} onChange={this.onLogChange} id="log" className="form-control">
+          {brewLogs.map(function (log) {
+            var startTimeFormatted = log.startTime ? moment(log.startTime).format('YYYY.MM.DD HH:mm') : '';
+
+            return <option key={log._id} value={log._id}>[{startTimeFormatted}] {log.name}</option>
+          })}
+      </select>
+    </div>;
+
+
+    var tempChart =
+    <div className="row">
+      <div className="col-md-12">
+        {selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="temp" /> : <span/> }
+      </div>
+    </div>;
+
+    var pwmChart =
+    <div className="row">
+      <div className="col-md-12">
+        {selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="pwm" /> : <span/> }
+      </div>
+    </div>;
+
     return (
       <div className="row">
         <h1>Log</h1>
 
-        <div className="form-group">
-          <label htmlFor="log" className="control-label">Subject</label>
-          <select value={this.state.selectedBrewId} onChange={this.onLogChange} id="log" className="form-control">
-              {brewLogs.map(function (log) {
-                var startTimeFormatted = log.startTime ? moment(log.startTime).format('YYYY.MM.DD HH:mm') : '';
+        {brewLogs.length ? <div>{brewSelector} {tempChart} <br/> {pwmChart}</div>
+        : <div className="alert alert-warning" role="alert">Brew first!</div>}
 
-                return <option key={log._id} value={log._id}>[{startTimeFormatted}] {log.name}</option>
-              })}
-          </select>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            {selectedBrewLog ? <TempChart brew={selectedBrewLog} /> : <span/> }
-          </div>
-        </div>
       </div>
     );
   }

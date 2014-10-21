@@ -8,7 +8,7 @@ var Chart = require('chart.js/Chart');
 // TODO: bug in Chart.js
 // Chart.defaults.global.responsive = true;
 
-var TempChart = React.createClass({
+var LogChart = React.createClass({
 
   /*
    * Get initial state
@@ -22,7 +22,6 @@ var TempChart = React.createClass({
       labels: [],
       datasets: [
         {
-          label: "Temperature",
           fillColor: "rgba(220,220,220,0.2)",
           strokeColor: "rgba(220,220,220,1)",
           pointColor: "rgba(220,220,220,1)",
@@ -57,19 +56,19 @@ var TempChart = React.createClass({
    * @method render
    */
   render: function () {
-    var brew = this.props.brew;
-    var logs = brew.logs;
+    var logs = this.props.logs;
+    var valueField = this.props.valueField;
     var chartData = this.state.chartData;
 
     var skip = Math.floor(logs.length / 18) + 1;
     var min = {};
     var max = {};
 
-    var tempDataSet = chartData.datasets[0];
+    var dataSet = chartData.datasets[0];
 
     // clear previous
     chartData.labels = [];
-    tempDataSet.data = [];
+    dataSet.data = [];
 
     logs.forEach(function (log, key) {
       var dateLabel;
@@ -80,16 +79,16 @@ var TempChart = React.createClass({
         dateLabel = log.date.getHours() + ':' + (log.date.getMinutes() < 10 ? '0' + log.date.getMinutes() : log.date.getMinutes());
 
         // max-min temp
-        if (!min.temp || min.temp > log.temp) {
-          min.temp = log.temp;
+        if (!min[valueField] || min[valueField] > log[valueField]) {
+          min[valueField] = log[valueField];
         }
 
-        if (!max.temp || max.temp < log.temp) {
-          max.temp = log.temp;
+        if (!max[valueField] || max[valueField] < log[valueField]) {
+          max[valueField] = log[valueField];
         }
 
         chartData.labels.push(dateLabel);
-        tempDataSet.data.push(log.temp);
+        dataSet.data.push(log[valueField]);
       }
     });
 
@@ -104,4 +103,4 @@ var TempChart = React.createClass({
   }
 });
 
-module.exports = TempChart;
+module.exports = LogChart;
