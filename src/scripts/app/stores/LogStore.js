@@ -24,6 +24,7 @@ function LogStore() {
 LogStore.storeName = 'LogStore';
 LogStore.handlers = {};
 LogStore.handlers[LogConstants.ActionTypes.FIND_LOG_SUCCESS] = 'handleBrewLogs';
+LogStore.handlers[LogConstants.ActionTypes.FIND_ONE_LOG_SUCCESS] = 'handleSelectedBrewLog';
 
 
 // Inherit ApplicationStore from the EventEmitter
@@ -71,10 +72,23 @@ LogStore.prototype.rehydrate = function (state) {
  * Handle brew logs
  *
  * @method handleBrewLogs
- * @param {Object} brew
+ * @param {Array} logs
  */
 LogStore.prototype.handleBrewLogs = function (logs) {
   this.brewLogs = logs;
+
+  this.emit('change');
+};
+
+
+/*
+ * Handle selected brew log
+ *
+ * @method handleSelectedBrewLog
+ * @param {Object} log
+ */
+LogStore.prototype.handleSelectedBrewLog = function (log) {
+  this.selectedBrewLog = log;
 
   this.emit('change');
 };

@@ -40,16 +40,15 @@ function findOne(options) {
   options = options || {};
 
   return new Promise(function (resolve, reject) {
-
     request
-      .get(APIConstants.Endpoints.Log.find + options.id)
+      .get(APIConstants.Endpoints.Log.findOne + options.id)
       .set('Accept', 'application/json')
       .end(function (res) {
-        if (!res.brews) {
+        if (!res.ok) {
           return reject();
         }
 
-        resolve(res.brews);
+        resolve(res.body);
       });
   });
 }

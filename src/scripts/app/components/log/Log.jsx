@@ -8,6 +8,8 @@ var debug = require('debug')('BrewUI:Dashboard');
 
 var TempChart = require('./TempChart.jsx');
 
+var findOneBrewLogAction = require('../../actions/logs/findOneBrew');
+
 var Log = React.createClass({
 
   /*
@@ -20,9 +22,11 @@ var Log = React.createClass({
     this.store = this.props.context.getStore('LogStore');
 
     var brewLogs = this.store.brewLogs;
+    var selectedBrew = this.store.selectedBrewLog || {};
+    var selectedBrewId = selectedBrew._id;
 
     return {
-      selectedBrew: brewLogs[0] && brewLogs[0]._id ? brewLogs[0]._id : null
+      selectedBrewId: selectedBrewId
     };
   },
 
@@ -53,8 +57,7 @@ var Log = React.createClass({
    * @method _onChange;
    */
   _onChange: function () {
-    var state = this.store.getState();
-    this.setState(state);
+    this.forceUpdate();
   },
 
 
@@ -64,9 +67,13 @@ var Log = React.createClass({
    * @method onLogChange
    */
   onLogChange: function () {
+    var brewId = event.target.value;
+
     this.setState({
-      selectedBrew: event.target.value
+      selectedBrewId: brewId
     });
+
+    this.props.context.executeAction(findOneBrewLogAction, { id: brewId });
   },
 
 
@@ -77,6 +84,7 @@ var Log = React.createClass({
    */
   render: function () {
     var brewLogs = this.store.brewLogs;
+    var selectedBrewLog = this.store.selectedBrewLog;
 
     return (
       <div className="row">
@@ -84,7 +92,7 @@ var Log = React.createClass({
 
         <div className="form-group">
           <label htmlFor="log" className="control-label">Subject</label>
-          <select value={this.state.selectedBrew} onChange={this.onLogChange} id="log" className="form-control">
+          <select value={this.state.selectedBrewId} onChange={this.onLogChange} id="log" className="form-control">
               {brewLogs.map(function (log) {
                 var startTimeFormatted = log.startTime ? moment(log.startTime).format('YYYY.MM.DD HH:mm') : '';
 
@@ -95,7 +103,7 @@ var Log = React.createClass({
 
         <div className="row">
           <div className="col-md-12">
-            <TempChart />
+            {selectedBrewLog ? <TempChart brew={selectedBrewLog} /> : <span/> }
           </div>
         </div>
       </div>

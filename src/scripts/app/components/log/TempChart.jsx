@@ -17,57 +17,37 @@ var TempChart = React.createClass({
    * @return {Object} state
    */
   getInitialState: function () {
+
+    var chartData = {
+      labels: [],
+      datasets: [
+        {
+          label: "Temperature",
+          fillColor: "rgba(220,220,220,0.2)",
+          strokeColor: "rgba(220,220,220,1)",
+          pointColor: "rgba(220,220,220,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(220,220,220,1)",
+          data: []
+        }
+      ]
+    };
+
     return {
-      data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [
-          {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40]
-          },
-          {
-            label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 86, 27, 90]
-          }
-        ]
-      }
+      ctx: null,
+      chart: null,
+      chartData: chartData
     };
   },
 
-
-  componentDidMount: function() {
+  componentDidMount: function () {
     var parent = this.getDOMNode().parentNode;
 
     this.state.ctx = this.getDOMNode().getContext('2d');
-    this.state.ctx.canvas.width  = parent.offsetWidth;
+    this.state.ctx.canvas.width = parent.offsetWidth;
 
-    this.state.chart = new Chart(this.state.ctx).Line(this.state.data);
-
-    // TODO: not necessary until it's not responsive
-    //window.addEventListener('resize', this.handleResize);
-  },
-
-
-  componentWillUnmount: function() {
-    //window.removeEventListener('resize', this.handleResize);
-  },
-
-
-  handleResize: function(e) {
-    //var parent = this.getDOMNode().parentNode;
-    //this.state.ctx.canvas.width  = parent.offsetWidth;
+    this.state.chart = new Chart(this.state.ctx).Line(this.state.chartData);
   },
 
 
@@ -77,6 +57,47 @@ var TempChart = React.createClass({
    * @method render
    */
   render: function () {
+    var brew = this.props.brew;
+    var logs = brew.logs;
+    var chartData = this.state.chartData;
+
+    var skip = Math.floor(logs.length / 18) + 1;
+    var min = {};
+    var max = {};
+
+    var tempDataSet = chartData.datasets[0];
+
+    // clear previous
+    chartData.labels = [];
+    tempDataSet.data = [];
+
+    logs.forEach(function (log, key) {
+      var dateLabel;
+
+      log.date = new Date(log.date);
+
+      if (key % skip === 0) {
+        dateLabel = log.date.getHours() + ':' + (log.date.getMinutes() < 10 ? '0' + log.date.getMinutes() : log.date.getMinutes());
+
+        // max-min temp
+        if (!min.temp || min.temp > log.temp) {
+          min.temp = log.temp;
+        }
+
+        if (!max.temp || max.temp < log.temp) {
+          max.temp = log.temp;
+        }
+
+        chartData.labels.push(dateLabel);
+        tempDataSet.data.push(log.temp);
+      }
+    });
+
+    if (this.state.chart) {
+      this.state.chart.destroy();
+      this.state.chart = new Chart(this.state.ctx).Line(this.state.chartData);
+    }
+
     return (
       <canvas height="500px" />
     );

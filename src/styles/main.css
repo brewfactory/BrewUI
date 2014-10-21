@@ -25,6 +25,10 @@ footer {
     height: 44px;
 }
 
+footer p {
+    margin-top: 10px;
+}
+
 /* end region sticky footer */
 
 
