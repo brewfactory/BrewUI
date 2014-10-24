@@ -5,6 +5,8 @@
 var React = require('react/addons');
 var Chart = require('chart.js/Chart');
 
+var CANVAS_HEIGHT = 500;
+
 // TODO: bug in Chart.js
 // Chart.defaults.global.responsive = true;
 
@@ -45,6 +47,7 @@ var LogChart = React.createClass({
 
     this.state.ctx = this.getDOMNode().getContext('2d');
     this.state.ctx.canvas.width = parent.offsetWidth;
+    this.state.ctx.canvas.height = CANVAS_HEIGHT;
 
     this.state.chart = new Chart(this.state.ctx).Line(this.state.chartData);
   },
@@ -66,7 +69,9 @@ var LogChart = React.createClass({
 
     var dataSet = chartData.datasets[0];
 
-    // clear previous
+    var parent;
+
+    // Clear previous data
     chartData.labels = [];
     dataSet.data = [];
 
@@ -92,13 +97,19 @@ var LogChart = React.createClass({
       }
     });
 
+    // Re-initialise
     if (this.state.chart) {
       this.state.chart.destroy();
+
+      parent = this.getDOMNode().parentNode;
+      this.state.ctx.canvas.width = parent.offsetWidth;
+      this.state.ctx.canvas.height = CANVAS_HEIGHT;
+
       this.state.chart = new Chart(this.state.ctx).Line(this.state.chartData);
     }
 
     return (
-      <canvas height="500px" />
+      <canvas/>
     );
   }
 });

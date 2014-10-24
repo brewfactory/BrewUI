@@ -7,6 +7,7 @@ var moment = require('moment');
 var debug = require('debug')('BrewUI:Designer');
 
 var createBrewAction = require('../../actions/brew/createBrew');
+var navigateAction = require('flux-router-component').navigateAction;
 
 var Designer = React.createClass({
 
@@ -105,6 +106,11 @@ var Designer = React.createClass({
       name: this.state.name,
       startTime: this.state.startTime,
       phases: this.state.phases
+    });
+
+    // Go to the dashboard
+    this.props.context.executeAction(navigateAction, {
+      path: '/'
     });
   },
 
