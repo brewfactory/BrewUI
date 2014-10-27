@@ -7,6 +7,7 @@ var debug = require('debug')('BrewUI:ActualBrew');
 var moment = require('moment');
 
 var navigateAction = require('flux-router-component').navigateAction;
+var routes = require('../../config/routes');
 
 var ActualBrew = React.createClass({
 
@@ -19,7 +20,7 @@ var ActualBrew = React.createClass({
     debug('designer button click');
 
     this.props.context.executeAction(navigateAction, {
-      path: '/designer'
+      path: routes.designer.path
     });
   },
 

@@ -9,6 +9,8 @@ var debug = require('debug')('BrewUI:Designer');
 var createBrewAction = require('../../actions/brew/createBrew');
 var navigateAction = require('flux-router-component').navigateAction;
 
+var routes = require('../../config/routes');
+
 var Designer = React.createClass({
 
   /*
@@ -110,7 +112,7 @@ var Designer = React.createClass({
 
     // Go to the dashboard
     this.props.context.executeAction(navigateAction, {
-      path: '/'
+      path: routes.dashboard.path
     });
   },
 
