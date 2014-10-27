@@ -66,6 +66,9 @@ footer p {
 
 /* end region brew phases */
 
+
+/* region designer */
+
 .panel.panel-actual-brew .panel-footer {
     background-color: #fff;
 }
@@ -77,3 +80,29 @@ footer p {
 .designer .panel.panel-info.phases .panel-footer {
     border-color: #bce8f1;
 }
+
+/* end region designer */
+
+
+/* region typehead */
+
+.typeahead .typeahead-selector {
+  list-style: none;
+  padding: 0;
+  background-color: #fff;
+  position: absolute;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.typeahead .typeahead-selector li {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.typeahead .typeahead-selector li a {
+  color: #000;
+  display: block;
+  padding: 16px 50px 16px 50px;
+}
+
+/* end region typehead */

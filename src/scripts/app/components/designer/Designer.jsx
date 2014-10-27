@@ -3,6 +3,7 @@
 /* jshint ignore:start */
 
 var React = require('react/addons');
+var Typeahead = require('react-typeahead').Typeahead;
 var moment = require('moment');
 var debug = require('debug')('BrewUI:Designer');
 
@@ -232,11 +233,21 @@ var Designer = React.createClass({
     return (
       <section className="row designer">
         <div className="col-md-12">
-          <p>
-            <button onClick={_this.onCloneActualBtnClick} type="button" className="btn btn-success">Clone actual</button>
-          &nbsp;
-            <button onClick={_this.onResetBtnClick} type="button" className="btn btn-default">Reset</button>
-          </p>
+
+          <div className="row">
+            <div className="col-md-9">
+              <p>
+                <button onClick={_this.onCloneActualBtnClick} type="button" className="btn btn-success">Clone actual</button>
+              &nbsp;
+                <button onClick={_this.onResetBtnClick} type="button" className="btn btn-default">Reset</button>
+              </p>
+            </div>
+            <div className="col-md-3">
+              <div className="form-group">
+                <Typeahead customClasses={{input:"form-control"}} options={['John', 'Paul', 'George', 'Ringo']} />
+              </div>
+            </div>
+          </div>
 
           <form name="brewForm">
             <div className="form-group">
