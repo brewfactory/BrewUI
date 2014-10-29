@@ -10,6 +10,7 @@ var clientDebug = debug('BrewUI:client');
 var navigateAction = require('flux-router-component').navigateAction;
 var App = App || {};
 var dehydratedState = App && App.Context;     // Sent from the server
+var APIConstants = require('./constants/APIConstants');
 
 var application;
 var app;
@@ -48,6 +49,6 @@ React.renderComponent(app, mountNode, function () {
 
 // Use WebSockets as data source
 require('./module/WebSocket')({
-  server: 'http://localhost:9003',
+  server: APIConstants.Host,
   context: application.getActionContext()
 });

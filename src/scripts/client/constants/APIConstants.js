@@ -1,13 +1,14 @@
 module.exports = {
+  Host: 'http://localhost:9003/api',
   Endpoints: {
     Brew: {
-      create: 'http://localhost:9003/api/brew',
-      stop: 'http://localhost:9003/api/brew/stop',
-      pause: 'http://localhost:9003/api/brew/pause'
+      create: '/brew',
+      stop: '/brew/stop',
+      pause: '/brew/pause'
     },
     Log: {
-      find: 'http://localhost:9003/api/brew/log',
-      findOne: 'http://localhost:9003/api/brew/log/'
+      find: '/brew/log',
+      findOne: '/brew/log/'
     }
   }
 };
