@@ -1,6 +1,8 @@
+var HOST = global.API_HOST || '';
+
 module.exports = {
-  Host: 'http://localhost:9003/api',
-  WebSocket: 'http://localhost:9003',
+  Host: HOST+ '/api',
+  WebSocket: HOST,
   Endpoints: {
     Brew: {
       create: '/brew',
