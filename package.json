@@ -15,8 +15,9 @@
     "lodash-node": "^2.4.1",
     "moment": "^2.8.3",
     "react": "^0.11.2",
+    "rising-url": "^1.0.3",
     "routr": "^0.0.3",
-    "socket.io-client": "^1.1.0",
+    "socket.io-client": "^1.2.0",
     "superagent": "^0.20.0"
   },
   "devDependencies": {

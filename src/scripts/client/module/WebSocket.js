@@ -1,3 +1,5 @@
+var debug = require('debug')('BrewUI:WebSocket');
+
 // Actions
 var receiveTemperature = require('./../../app/actions/brewer/receiveTemperature');
 var receivePWM = require('./../../app/actions/brewer/receivePWM');
@@ -69,9 +71,25 @@ function init(options) {
 
 
   // Events
-  socket.on('temperature_changed', onTemperatureChanged);
-  socket.on('pwm_changed', onPWMChanged);
-  socket.on('brew_changed', onBrewChanged);
+  socket.on('connect', function() {
+    debug('Connect: add listeners');
+
+    socket.on('temperature_changed', onTemperatureChanged);
+    socket.on('pwm_changed', onPWMChanged);
+    socket.on('brew_changed', onBrewChanged);
+
+    socket.on('disconnect', function () {
+      socket.off('temperature_changed', onTemperatureChanged);
+      socket.off('pwm_changed', onPWMChanged);
+      socket.off('brew_changed', onBrewChanged);
+
+      debug('Disconnect: remove listeners');
+    });
+  });
+
+  socket.on('error', function (err) {
+    debug('Error', err);
+  });
 }
 
 module.exports = init;

@@ -4,6 +4,8 @@
  * @module brew
  */
 
+var url = require('rising-url');
+
 var request = require('superagent');
 var APIConstants = require('../constants/APIConstants');
 
@@ -24,9 +26,10 @@ function create(options) {
   var brew = options.brew;
 
   return new Promise(function (resolve, reject) {
+    var URL = url.format(APIConstants.Host, APIConstants.Endpoints.Brew.create);
 
     request
-      .post(APIConstants.Endpoints.Brew.create)
+      .post(URL)
       .send({
         name: brew.name,
         startTime: brew.startTime,
@@ -52,9 +55,10 @@ function create(options) {
 function pause() {
 
   return new Promise(function (resolve, reject) {
+    var URL = url.format(APIConstants.Host, APIConstants.Endpoints.Brew.pause);
 
     request
-        .patch(APIConstants.Endpoints.Brew.pause)
+        .patch(URL)
         .set('Accept', 'application/json')
         .end(function (res) {
           if (!res.ok) {
@@ -75,9 +79,10 @@ function pause() {
 function stop() {
 
   return new Promise(function (resolve, reject) {
+    var URL = url.format(APIConstants.Host, APIConstants.Endpoints.Brew.stop);
 
     request
-        .patch(APIConstants.Endpoints.Brew.stop)
+        .patch(URL)
         .set('Accept', 'application/json')
         .end(function (res) {
           if (!res.ok) {
