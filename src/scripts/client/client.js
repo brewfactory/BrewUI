@@ -49,6 +49,6 @@ React.renderComponent(app, mountNode, function () {
 
 // Use WebSockets as data source
 require('./module/WebSocket')({
-  server: APIConstants.Host,
+  server: APIConstants.WebSocket,
   context: application.getActionContext()
 });

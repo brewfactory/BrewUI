@@ -4,7 +4,7 @@
  * @module brew
  */
 
-var url = require('url');
+var url = require('rising-url');
 
 var request = require('superagent');
 var APIConstants = require('../constants/APIConstants');
@@ -18,7 +18,7 @@ var APIConstants = require('../constants/APIConstants');
  */
 function find() {
   return new Promise(function (resolve, reject) {
-    var URL = url.resolve(APIConstants.Host, APIConstants.Endpoints.Log.find);
+    var URL = url.format(APIConstants.Host, APIConstants.Endpoints.Log.find);
 
     request
       .get(URL)
@@ -44,7 +44,11 @@ function findOne(options) {
   options = options || {};
 
   return new Promise(function (resolve, reject) {
-    var URL = url.resolve(APIConstants.Host, APIConstants.Endpoints.Log.find + options.id);
+    var URL = url.format(APIConstants.Host, APIConstants.Endpoints.Log.findOne, {
+      param: {
+        id: options.id
+      }
+    });
 
     request
       .get(URL)
