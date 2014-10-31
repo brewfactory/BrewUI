@@ -4,7 +4,6 @@
 
 var React = require('react/addons');
 var moment = require('moment');
-var debug = require('debug')('BrewUI:Dashboard');
 
 var LogChart = require('./LogChart.jsx');
 
@@ -21,7 +20,6 @@ var Log = React.createClass({
   getInitialState: function () {
     this.store = this.props.context.getStore('LogStore');
 
-    var brewLogs = this.store.brewLogs;
     var selectedBrew = this.store.selectedBrewLog || {};
     var selectedBrewId = selectedBrew._id;
 

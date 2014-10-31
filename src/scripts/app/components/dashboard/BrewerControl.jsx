@@ -3,7 +3,6 @@
 /* jshint ignore:start */
 
 var React = require('react/addons');
-var debug = require('debug')('BrewUI:Brewer');
 
 var pauseBrewAction = require('../../actions/brew/pauseBrew');
 var stopBrewAction = require('../../actions/brew/stopBrew');

@@ -4,7 +4,6 @@
 
 var React = require('react/addons');
 var moment = require('moment');
-var debug = require('debug')('BrewUI:Designer');
 
 var createBrewAction = require('../../actions/brew/createBrew');
 var navigateAction = require('flux-router-component').navigateAction;

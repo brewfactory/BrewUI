@@ -74,9 +74,6 @@ var Application = React.createClass({
    * @method render
    */
   render: function () {
-    var pageName = this.state.currentPageName;
-    var route = this.state.route;
-
     var page;
 
     // Select page for routing

@@ -3,7 +3,6 @@
 /* jshint ignore:start */
 
 var React = require('react/addons');
-var debug = require('debug')('BrewUI:Brewer');
 
 var Brewer = React.createClass({
 
