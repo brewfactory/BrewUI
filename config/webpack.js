@@ -12,13 +12,20 @@
 'use strict';
 
 var webpack = require('webpack');
+var path = require('path');
 
-module.exports = function(release) {
+/*
+ * Webpack config
+ *
+ * @param {String} DEST path
+ * @param {Boolean} release
+ */
+module.exports = function(DEST, release) {
   return {
     output: {
-      path: './build/scripts/',
+      path: path.join(DEST, 'scripts/'),
       filename: 'client.js',
-      publicPatch: './build/scripts/'
+      publicPatch: path.join(DEST, 'scripts/')
     },
 
     cache: !release,

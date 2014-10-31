@@ -18,7 +18,7 @@ var DEST = './build/';
 // Bundle
 gulp.task('bundle', function (cb) {
   var started = false;
-  var config = require('./config/webpack.js')(RELEASE);
+  var config = require('./config/webpack.js')(DEST, RELEASE);
   var bundler = webpack(config);
 
   function bundle(err, stats) {
@@ -83,9 +83,10 @@ gulp.task('clean', function () {
     path.join(DEST, 'scripts'),
     path.join(DEST, 'index.html')
   ], {
-    read: false,
+    read: false
+  }).pipe($.clean({
     force: true
-  }).pipe($.clean());
+  }));
 });
 
 
@@ -105,7 +106,7 @@ gulp.task('htmlBundle', ['bower'], function () {
 
 // Manifest
 gulp.task('manifest', function () {
-  return gulp.src(path.join('./manifest.json'))
+  return gulp.src('./manifest.json')
     .pipe($.jsonEditor({
       name: pkg.name,
       version: pkg.version,

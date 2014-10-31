@@ -2,42 +2,48 @@
  * Main
  */
 
-var gulpfile = require('./gulpfile');
+var path = require('path');
+var debug = require('debug')('BrewUI');
+
 var Promise = require('bluebird');
+
+var gulpfile = require('./gulpfile');
+var pkg = require('./package.json');
 
 
 /*
  * Build
  *
  * @method build
- * @param {String} path
+ * @param {String} distPath
  * @param {Boolean} force optional
  * @return {Promise}
  */
-function build(path, force) {
+function build(distPath, force) {
   return new Promise(function (resolve, reject) {
-    if(force !== true) {
-      // TODO: check for build necessary
+    var manifest = require(path.join(distPath, 'manifest.json'));
+
+    // Do not build if the same version and not forced
+    if(force !== true && manifest && manifest.version === pkg.version) {
+      debug('Already built');
       return resolve();
     }
 
-    gulpfile.build(path, function (err) {
+    debug('Start build');
+    gulpfile.build(distPath, function (err) {
       if(err) {
+        debug('Build error', err);
         return reject(err);
       }
 
+      debug('Build is done');
       resolve();
     });
   });
 }
 
 // Main interface
+// TODO
 //exports.app = require('./src/scripts/app/app');
 //exports.client = require('./src/scripts/client/client');
 exports.build = build;
-
-exports.build('../brew-ui-build').then(function () {
-  console.log('DONE');
-}).catch(function (err) {
-  console.error(err);
-});
