@@ -3,6 +3,7 @@
  */
 
 var gulpfile = require('./gulpfile');
+var Promise = require('bluebird');
 
 
 /*
@@ -31,6 +32,12 @@ function build(path, force) {
 }
 
 // Main interface
-exports.app = require('./src/scripts/app/app');
-exports.client = require('./src/scripts/client/client');
+//exports.app = require('./src/scripts/app/app');
+//exports.client = require('./src/scripts/client/client');
 exports.build = build;
+
+exports.build('../brew-ui-build').then(function () {
+  console.log('DONE');
+}).catch(function (err) {
+  console.error(err);
+});

@@ -23,6 +23,7 @@
     "prepublish": "npm build"
   },
   "dependencies": {
+    "bluebird": "^2.3.10",
     "chart.js": "^1.0.1-beta.2",
     "debug": "^2.0.0",
     "dispatchr": "^0.2.7",

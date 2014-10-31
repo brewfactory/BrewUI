@@ -57,7 +57,7 @@ gulp.task('images', function () {
 });
 
 // CSS style sheets
-gulp.task('styles', function() {
+gulp.task('styles', function () {
   return gulp.src('./src/styles/**/*.css')
     .pipe($.csso())
     .pipe(gulp.dest(path.join(DEST, 'styles')))
@@ -76,14 +76,16 @@ gulp.task('fonts', function () {
 // Clean
 gulp.task('clean', function () {
   return gulp.src([
-      path.join(DEST, 'fonts'),
-      path.join(DEST, 'styles'),
-      path.join(DEST, 'images'),
-      path.join(DEST, 'views'),
-      path.join(DEST, 'scripts'),
-      path.join(DEST, 'index.html')
-    ],
-    {read: false}).pipe($.clean());
+    path.join(DEST, 'fonts'),
+    path.join(DEST, 'styles'),
+    path.join(DEST, 'images'),
+    path.join(DEST, 'views'),
+    path.join(DEST, 'scripts'),
+    path.join(DEST, 'index.html')
+  ], {
+    read: false,
+    force: true
+  }).pipe($.clean());
 });
 
 
@@ -115,7 +117,8 @@ gulp.task('manifest', function () {
 
 // Build
 gulp.task('build', function (callback) {
-  runSequence('clean', 'html', 'htmlBundle', 'bundle', ['styles', 'images', 'fonts'], 'manifest', callback);
+  runSequence('clean', 'html', 'htmlBundle', 'bundle', ['styles', 'images', 'fonts'], 'manifest',
+    callback);
 });
 
 // Default task
@@ -172,7 +175,6 @@ gulp.task('serve', function (callback) {
 });
 
 
-
 /*
  * Build
  *
@@ -180,10 +182,10 @@ gulp.task('serve', function (callback) {
  * @param {String} outputPath
  * @param {Boolean} build
  */
-function build (outputPath, callback) {
+function build(outputPath, callback) {
   DEST = outputPath || DEST;
 
-  gulp.run('default', callback);
+  gulp.start('default', callback);
 }
 
 
