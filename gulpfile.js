@@ -5,6 +5,7 @@ var path = require('path');
 var gulp = require('gulp');
 var webpack = require('webpack');
 var runSequence = require('run-sequence');
+var pkg = require('./package.json');
 
 // Load plugins
 var $ = require('gulp-load-plugins')();
@@ -99,9 +100,22 @@ gulp.task('htmlBundle', ['bower'], function () {
     .pipe(gulp.dest(DEST));
 });
 
+
+// Manifest
+gulp.task('manifest', function () {
+  return gulp.src(path.join('./manifest.json'))
+    .pipe($.jsonEditor({
+      name: pkg.name,
+      version: pkg.version,
+      date: new Date()
+    }))
+    .pipe(gulp.dest(DEST));
+});
+
+
 // Build
 gulp.task('build', function (callback) {
-  runSequence('clean', 'html', 'htmlBundle', 'bundle', ['styles', 'images', 'fonts'], callback);
+  runSequence('clean', 'html', 'htmlBundle', 'bundle', ['styles', 'images', 'fonts'], 'manifest', callback);
 });
 
 // Default task
@@ -156,3 +170,22 @@ gulp.task('serve', function (callback) {
 
   runSequence('build', 'watch', 'connect', callback);
 });
+
+
+
+/*
+ * Build
+ *
+ * @method build
+ * @param {String} outputPath
+ * @param {Boolean} build
+ */
+function build (outputPath, callback) {
+  DEST = outputPath || DEST;
+
+  gulp.run('default', callback);
+}
+
+
+// Public interface
+exports.build = build;
