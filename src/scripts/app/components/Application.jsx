@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 /* jshint ignore:start */
 
 'use strict';
