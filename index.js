@@ -31,13 +31,17 @@ function build(path, force) {
   });
 }
 
-// Main interface
-//exports.app = require('./src/scripts/app/app');
-//exports.client = require('./src/scripts/client/client');
-exports.build = build;
 
-exports.build('../brew-ui-build').then(function () {
-  console.log('DONE');
-}).catch(function (err) {
-  console.error(err);
-});
+/*
+ * Extent to isomorphic
+ *
+ * requires jsx support
+ */
+function extendToIsomorphic () {
+  exports.app = require('./src/scripts/app/app');
+  exports.client = require('./src/scripts/client/client');
+}
+
+// Main interface
+exports.build = build;
+exports.isomorphic = extendToIsomorphic;
