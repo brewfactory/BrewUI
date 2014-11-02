@@ -152,6 +152,10 @@ gulp.task('watch', function () {
 
 // Serve
 gulp.task('connect', function () {
+  if(!$.connect) {
+    return console.error('Run "npm install" first');
+  }
+
   $.connect.server({
     root: ['build', 'tmp'],
     port: process.env.PORT || 9000,
