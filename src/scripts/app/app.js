@@ -6,10 +6,11 @@
 
 'use strict';
 
+var React = require('react');
 var debug = require('debug')('BrewUI:app');
 
 var Context = require('./lib/Context');
-var Application = require('./components/Application.jsx');
+var Application = React.createFactory(require('./components/Application.jsx'));
 var routes = require('./config/routes');
 
 var findBrewLogAction = require('./actions/logs/findBrew');

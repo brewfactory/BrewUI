@@ -33,8 +33,8 @@ var Nav = React.createClass({
         var link = links[name];
 
         return (
-          <li key={name}>
-            <NavLink className={selected === name ? 'active' : '' } name={link.route} context={context}>{link.text}</NavLink>
+          <li className={selected === name ? 'active' : '' } key={name}>
+            <NavLink routeName={link.route} context={context}>{link.text}</NavLink>
           </li>
         );
       });

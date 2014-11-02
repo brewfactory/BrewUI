@@ -43,7 +43,7 @@ application.getActionContext().executeAction(navigateAction, {
 
 clientDebug('React Rendering');
 
-React.renderComponent(app, mountNode, function () {
+React.render(app, mountNode, function () {
   clientDebug('React Rendered');
 });
 
