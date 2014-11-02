@@ -1,6 +1,6 @@
 {
-  "name": "BrewUI",
-  "version": "1.0.0",
+  "name": "brew-ui",
+  "version": "1.0.1",
   "description": "Common User Interface for the Brewfactory projects.",
   "authors": [
     "Peter Marton, @slashdotpeter"
@@ -18,7 +18,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp watch",
-    "build": "bower install; gulp",
+    "build": "gulp",
     "test": "exit 0"
   },
   "dependencies": {
@@ -44,14 +44,13 @@
     "gulp-csso": "^0.2.9",
     "gulp-filter": "^1.0.2",
     "gulp-flatten": "0.0.4",
-    "gulp-if": "^1.2.5",
     "gulp-json-editor": "^2.1.1",
     "gulp-livereload": "^2.1.1",
     "gulp-load-plugins": "~0.7.0",
     "gulp-react": "~2.0.0",
     "gulp-size": "~1.1.0",
     "gulp-uglify": "^1.0.1",
-    "gulp-useref": "~1.0.2",
+    "gulp-usemin": "^0.3.8",
     "gulp-util": "~3.0.1",
     "jshint-loader": "^0.8.0",
     "jsx-loader": "^0.12.0",

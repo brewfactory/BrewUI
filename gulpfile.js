@@ -41,24 +41,16 @@ gulp.task('bundle', function (cb) {
   }
 });
 
-// HTML
-gulp.task('html', function () {
-  return gulp.src('src/views/*.html')
-    .pipe($.useref())
-    .pipe(gulp.dest(DEST))
-    .pipe($.size());
-});
-
 // Images
 gulp.task('images', function () {
-  return gulp.src('src/images/**/*')
+  return gulp.src(path.join(__dirname, 'src/images/**/*'))
     .pipe(gulp.dest(path.join(DEST, 'images')))
     .pipe($.size());
 });
 
 // CSS style sheets
 gulp.task('styles', function () {
-  return gulp.src('./src/styles/**/*.css')
+  return gulp.src(path.join(__dirname, 'src/styles/**/*.css'))
     .pipe($.csso())
     .pipe(gulp.dest(path.join(DEST, 'styles')))
     .pipe($.size({title: 'styles'}));
@@ -91,22 +83,20 @@ gulp.task('clean', function () {
 
 
 // HTML Bundle
-gulp.task('htmlBundle', ['bower'], function () {
-  var assets = $.useref.assets();
-
-  return gulp.src('./src/views/**/*.html')
-    .pipe(assets)
-    .pipe($.if('*.js', $.uglify()))
-    .pipe($.if('*.css', $.csso()))
-    .pipe(assets.restore())
-    .pipe($.useref())
+gulp.task('html', ['bower'], function () {
+  return gulp.src(path.join(__dirname, './src/views/**/*.html'))
+    .pipe($.usemin({
+      assetsDir: path.join(__dirname, 'src'),
+      css: [$.csso()],
+      js: [$.uglify()]
+    }))
     .pipe(gulp.dest(DEST));
 });
 
 
 // Manifest
 gulp.task('manifest', function () {
-  return gulp.src('./manifest.json')
+  return gulp.src(path.join(__dirname, './manifest.json'))
     .pipe($.jsonEditor({
       name: pkg.name,
       version: pkg.version,
@@ -118,7 +108,7 @@ gulp.task('manifest', function () {
 
 // Build
 gulp.task('build', function (callback) {
-  runSequence('clean', 'html', 'htmlBundle', 'bundle', ['styles', 'images', 'fonts'], 'manifest',
+  runSequence('clean', 'html', 'bundle', ['styles', 'images'], 'manifest',
     callback);
 });
 
@@ -132,7 +122,9 @@ gulp.task('default', ['clean'], function () {
 
 // Bower helper
 gulp.task('bower', function () {
-  gulp.src('src/bower_components/**/*.js', {base: 'src/bower_components'})
+  gulp.src(path.join(__dirname, 'src/bower_components/**/*.js'), {
+    base: path.join(__dirname, 'src/bower_components')
+  })
     .pipe(gulp.dest(path.join(DEST, 'bower_components')));
 });
 

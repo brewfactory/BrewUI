@@ -31,7 +31,7 @@ module.exports = function(DEST, release) {
     cache: !release,
     debug: !release,
     devtool: false,
-    entry: './src/scripts/client/client.js',
+    entry: path.join(__dirname, '../src/scripts/client/client.js'),
 
     stats: {
       colors: true,
@@ -48,6 +48,10 @@ module.exports = function(DEST, release) {
 
     resolve: {
       extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
+    },
+
+    resolveLoader: {
+      modulesDirectories: [path.join(__dirname, '../node_modules')]
     },
 
     module: {

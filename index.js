@@ -3,8 +3,9 @@
  */
 
 var path = require('path');
-var debug = require('debug')('BrewUI');
+var fs = require('fs');
 
+var debug = require('debug')('BrewUI');
 var Promise = require('bluebird');
 
 var gulpfile = require('./gulpfile');
@@ -20,8 +21,15 @@ var pkg = require('./package.json');
  * @return {Promise}
  */
 function build(distPath, force) {
+  var manifestPath = path.join(distPath, 'manifest.json');
+
   return new Promise(function (resolve, reject) {
-    var manifest = require(path.join(distPath, 'manifest.json'));
+    var manifest;
+
+    // Manifest exists
+    if(fs.existsSync(manifestPath)) {
+      manifest = require(manifestPath);
+    }
 
     // Do not build if the same version and not forced
     if(force !== true && manifest && manifest.version === pkg.version) {
