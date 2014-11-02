@@ -65,4 +65,5 @@ function extendToIsomorphic () {
 
 // Main interface
 exports.build = build;
+exports.routes = require('./src/scripts/app/config/routes');
 exports.isomorphic = extendToIsomorphic;
