@@ -1,6 +1,6 @@
 {
   "name": "brew-ui",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Common User Interface for the Brewfactory projects.",
   "authors": [
     "Peter Marton, @slashdotpeter"

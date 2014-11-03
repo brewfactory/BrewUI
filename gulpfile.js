@@ -144,7 +144,7 @@ gulp.task('watch', function () {
     .on('change', $.livereload.changed);
 
   // Watch .html files
-  gulp.watch('src/views/**/*.html', ['html', 'htmlBundle'])
+  gulp.watch('src/views/**/*.html', ['html'])
     .on('change', $.livereload.changed);
 
   // Watch image files

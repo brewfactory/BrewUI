@@ -42,7 +42,7 @@ var Nav = React.createClass({
       <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div className="container">
           <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
               <span className="sr-only">Toggle navigation</span>
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
@@ -50,7 +50,7 @@ var Nav = React.createClass({
             </button>
             <a className="navbar-brand" href="/">Brewfactory</a>
           </div>
-          <div className="navbar-collapse collapse">
+          <div className="navbar-collapse collapse" id="navbar-collapse-1">
             <ul className="nav navbar-nav">
                 {linkHTML}
             </ul>

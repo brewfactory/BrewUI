@@ -39,6 +39,10 @@ footer p {
     border: none;
 }
 
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: #1F94FC;
+}
+
 .navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-link {
     color: #b3d9ff;
 }
