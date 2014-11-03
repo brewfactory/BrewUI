@@ -1,4 +1,7 @@
-var HOST = global.API_HOST || '';
+
+// Overwrite host from window/global or from localStorage
+var localStorageHost = global.localStorage && global.localStorage.API_HOST;
+var HOST = global.API_HOST || localStorageHost || '';
 
 module.exports = {
   Host: HOST+ '/api',

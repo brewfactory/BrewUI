@@ -5,6 +5,8 @@ var path = require('path');
 var gulp = require('gulp');
 var webpack = require('webpack');
 var runSequence = require('run-sequence');
+var modRewrite = require('connect-modrewrite');
+
 var pkg = require('./package.json');
 
 // Load plugins
@@ -14,6 +16,7 @@ var mainBowerFiles = require('main-bower-files');
 var WATCH = true;
 var RELEASE = false;
 var DEST = './build/';
+var API_HOST = process.env.API || 'http://localhost:3000';
 
 // Bundle
 gulp.task('bundle', function (cb) {
@@ -160,7 +163,15 @@ gulp.task('connect', function () {
     root: ['build', 'tmp'],
     port: process.env.PORT || 9000,
     livereload: true,
-    fallback: path.join(DEST, 'index.html')
+    fallback: path.join(DEST, 'index.html'),
+    middleware: function() {
+      return [
+        modRewrite([
+          '^/api/(.*)$ ' + API_HOST + '/api/$1 [P]',
+          '^/socket.io/(.*)$ ' + API_HOST + '/socket.io/$1 [P]'
+        ])
+      ];
+    }
   });
 });
 

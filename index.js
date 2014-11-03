@@ -7,8 +7,8 @@ var fs = require('fs');
 
 var debug = require('debug')('BrewUI');
 var Promise = require('bluebird');
+var _ = require('lodash-node');
 
-var gulpfile = require('./gulpfile');
 var pkg = require('./package.json');
 
 
@@ -21,12 +21,31 @@ var pkg = require('./package.json');
  * @return {Promise}
  */
 function build(distPath, force) {
-  var manifestPath = path.join(distPath, 'manifest.json');
-
   return new Promise(function (resolve, reject) {
+
+    // Check for dev dependencies
+    var isDevDependencies = _.every(pkg.devDependencies, function (version, name) {
+      var available = true;
+
+      try {
+        require.resolve(name);
+      } catch(e) {
+        available = false;
+      }
+
+      return available;
+    });
+
+    if(!isDevDependencies) {
+      return reject('Install "devDependencies" first.');
+    }
+
+    var gulpfile = require('./gulpfile');
+    var manifestPath = path.join(distPath, 'manifest.json');
+
     var manifest;
 
-    // Manifest exists
+    // Check for manifest
     if(fs.existsSync(manifestPath)) {
       manifest = require(manifestPath);
     }
@@ -34,7 +53,7 @@ function build(distPath, force) {
     // Do not build if the same version and not forced
     if(force !== true && manifest && manifest.version === pkg.version) {
       debug('Already built');
-      return resolve();
+      return resolve(false);
     }
 
     debug('Start build');
@@ -45,7 +64,7 @@ function build(distPath, force) {
       }
 
       debug('Build is done');
-      resolve();
+      resolve(true);
     });
   });
 }
@@ -55,6 +74,8 @@ function build(distPath, force) {
  * Extent to isomorphic
  *
  * requires jsx support
+ *
+ * @method extendToIsomorphic
  */
 function extendToIsomorphic () {
   debug('Generate Isomorphic interfaces: .app, .client');
@@ -63,7 +84,18 @@ function extendToIsomorphic () {
   exports.client = require('./src/scripts/client/client');
 }
 
+
+/*
+ * Get static path
+ *
+ * @method getStaticPath
+ */
+function getStaticPath () {
+  return path.join(__dirname, 'build');
+}
+
 // Main interface
 exports.build = build;
 exports.routes = require('./src/scripts/app/config/routes');
 exports.isomorphic = extendToIsomorphic;
+exports.getStaticPath = getStaticPath;
