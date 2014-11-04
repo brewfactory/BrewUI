@@ -21,14 +21,14 @@ module.exports = function (context, payload, done) {
       context.dispatch(LogConstants.ActionTypes.FIND_ONE_LOG_SUCCESS, brews);
 
       if(typeof done === 'function') {
-        done();
+        done(null, brews);
       }
     })
     .catch(function (err) {
       debug('FIND_ONE_LOG error', err);
 
       if(typeof done === 'function') {
-        done();
+        done(err);
       }
     });
 };
