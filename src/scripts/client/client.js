@@ -36,10 +36,12 @@ window.context = application.context;
 app = application.getComponent();
 mountNode = document.getElementById('app');
 
-// Load current path
-application.getActionContext().executeAction(navigateAction, {
-  path: window.location.pathname
-}, function () { });
+// Load current path from window location
+if(!dehydratedState) {
+  application.getActionContext().executeAction(navigateAction, {
+    path: window.location.pathname
+  }, function () { });
+}
 
 clientDebug('React Rendering');
 
