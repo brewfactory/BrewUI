@@ -6,6 +6,7 @@ var moment = require('moment');
 var LogChart = require('./LogChart.jsx');
 
 var findOneBrewLogAction = require('../../actions/logs/findOneBrew');
+var isClient = !!window;
 
 var Log = React.createClass({
 
@@ -99,7 +100,7 @@ var Log = React.createClass({
     <div className="row">
       <div className="col-md-12">
         <h4>Temperature</h4>
-        {selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="temp" /> : <span/> }
+        {isClient && selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="temp" /> : <span/> }
       </div>
     </div>;
 
@@ -107,7 +108,7 @@ var Log = React.createClass({
     <div className="row">
       <div className="col-md-12">
         <h4>PWM</h4>
-        {selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="pwm" /> : <span/> }
+        {isClient && selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="pwm" /> : <span/> }
       </div>
     </div>;
 
