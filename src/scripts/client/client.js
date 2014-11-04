@@ -8,8 +8,7 @@ var debug = require('debug');
 var Application = require('../app/app');
 var clientDebug = debug('BrewUI:client');
 var navigateAction = require('flux-router-component').navigateAction;
-var App = App || {};
-var dehydratedState = App && App.Context;     // Sent from the server
+var dehydratedState = global.App && global.App.Context;     // Sent from the server
 var APIConstants = require('./constants/APIConstants');
 
 var application;
@@ -31,15 +30,20 @@ application = new Application({
   fetcher: fetcher,
   initialState: dehydratedState
 });
+
+application.init();
+
 window.context = application.context;
 
 app = application.getComponent();
 mountNode = document.getElementById('app');
 
-// Load current path
-application.getActionContext().executeAction(navigateAction, {
-  path: window.location.pathname
-}, function () { });
+// Load current path from window location
+if(!dehydratedState) {
+  application.getActionContext().executeAction(navigateAction, {
+    path: window.location.pathname
+  }, function () { });
+}
 
 clientDebug('React Rendering');
 

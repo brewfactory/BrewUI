@@ -80,8 +80,13 @@ function build(distPath, force) {
 function extendToIsomorphic () {
   debug('Generate Isomorphic interfaces: .app, .client');
 
-  exports.app = require('./src/scripts/app/app');
-  exports.client = require('./src/scripts/client/client');
+  exports.App = require('./src/scripts/app/app');
+  exports.Fetcher = require('./src/scripts/app/lib/Fetcher');
+
+  exports.React = require('react');
+  exports.actions = {
+    navigateAction: require('flux-router-component').navigateAction
+  };
 }
 
 

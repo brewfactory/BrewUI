@@ -24,7 +24,7 @@ module.exports = function (context, payload, done) {
         context.dispatch(LogConstants.ActionTypes.FIND_LOG_SUCCESS, brews);
 
         if(typeof done === 'function') {
-          done();
+          done(null, brews);
         }
       });
     })
@@ -32,7 +32,7 @@ module.exports = function (context, payload, done) {
       debug('FIND_LOG error', err);
 
       if(typeof done === 'function') {
-        done();
+        done(err);
       }
     });
 };
