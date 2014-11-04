@@ -81,7 +81,6 @@ function extendToIsomorphic () {
   debug('Generate Isomorphic interfaces: .app, .client');
 
   exports.App = require('./src/scripts/app/app');
-  exports.client = require('./src/scripts/client/client');
 
   exports.React = require('react');
   exports.actions = {

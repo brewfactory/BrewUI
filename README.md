@@ -20,7 +20,7 @@ projects.
 
 * `BrewUI.routes` -> returns route config (good to check SPA routes)
 * `BrewUI.build(outputPath)` -> see below
-* `BrewUI.isomorphic()` -> add `BrewUI.App`, `BrewUI.client`, `BrewUI.React`, `BrewUI.actions` endpoints (needs [JSX support](https://www.npmjs.org/package/node-jsx))
+* `BrewUI.isomorphic()` -> add `BrewUI.App`, `BrewUI.React`, `BrewUI.actions` endpoints (needs [JSX support](https://www.npmjs.org/package/node-jsx))
 * `getStaticPath()` -> returns with the static path to the dist directory
 
 #### Overwrite API host
