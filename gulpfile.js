@@ -76,7 +76,7 @@ gulp.task('clean', function () {
     path.join(DEST, 'images'),
     path.join(DEST, 'views'),
     path.join(DEST, 'scripts'),
-    path.join(DEST, 'index.html')
+    path.join(DEST, 'layout.html')
   ], {
     read: false
   }).pipe($.clean({
@@ -163,7 +163,7 @@ gulp.task('connect', function () {
     root: ['build', 'tmp'],
     port: process.env.PORT || 9000,
     livereload: true,
-    fallback: path.join(DEST, 'index.html'),
+    fallback: path.join(DEST, 'layout.html'),
     middleware: function() {
       return [
         modRewrite([
