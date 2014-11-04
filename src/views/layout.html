@@ -29,7 +29,15 @@
 <![endif]-->
 
 
-<div id="app"></div>
+<div id="app">
+    <%- html %>
+</div>
+
+<!-- State from the server, will be: <script>state</script -->
+<span style="display:none">
+    <%- state %>
+</span>
+
 
 <script defer src="/scripts/client.js"></script>
 
