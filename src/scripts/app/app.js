@@ -80,7 +80,7 @@ App.prototype.init = function () {
       }
 
       // FInd selected brew
-      actionContext.executeAction(findOneBrewLogAction, { id: brews[0].id }, function (err) {
+      actionContext.executeAction(findOneBrewLogAction, { id: brews[0]._id }, function (err) {
         if(err) {
           return reject(err);
         }
