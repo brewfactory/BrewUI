@@ -15,18 +15,12 @@ module.exports = function (context, payload, done) {
     .then(function (resp) {
       var brews = resp.brews;
 
-      logFetcher.findOne({ id: brews[0]._id }).then(function (selectedResp) {
-        var selectedBrew = selectedResp.brews;
+      debug('dispatching FIND_LOG_SUCCESS', brews);
+      context.dispatch(LogConstants.ActionTypes.FIND_LOG_SUCCESS, brews);
 
-        debug('dispatching FIND_LOG_SUCCESS', brews);
-
-        context.dispatch(LogConstants.ActionTypes.FIND_ONE_LOG_SUCCESS, selectedBrew);
-        context.dispatch(LogConstants.ActionTypes.FIND_LOG_SUCCESS, brews);
-
-        if(typeof done === 'function') {
-          done(null, brews);
-        }
-      });
+      if(typeof done === 'function') {
+        done(null, brews);
+      }
     })
     .catch(function (err) {
       debug('FIND_LOG error', err);
