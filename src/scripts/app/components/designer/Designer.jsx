@@ -37,7 +37,7 @@ var Designer = React.createClass({
 
     this.setState({
       name: state.brew.name,
-      startTime: state.brew.startTime ? new Date(state.brew.startTime) : new Date(),
+      startTime: new Date(),
       phases: state.brew.phases.map(function (phase) {
         return {
           min: phase.min,
