@@ -15,6 +15,29 @@ var STATE = {
 
 
 /*
+ * Read
+ *
+ * @method read
+ */
+function read() {
+  return new Promise(function (resolve, reject) {
+    var URL = url.format(APIConstants.Host, APIConstants.Endpoints.Brew.read);
+
+    request
+      .get(URL)
+      .set('Accept', 'application/json')
+      .end(function (res) {
+        if (!res.ok || !res.body.brews) {
+          return reject();
+        }
+
+        resolve(res.body.brews);
+      });
+  });
+}
+
+
+/*
  * Create
  *
  * @method create
@@ -95,6 +118,7 @@ function stop() {
 }
 
 // Public
+exports.read = read;
 exports.create = create;
 exports.pause = pause;
 exports.stop = stop;

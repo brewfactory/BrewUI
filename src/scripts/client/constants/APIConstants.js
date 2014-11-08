@@ -8,6 +8,7 @@ module.exports = {
   WebSocket: HOST,
   Endpoints: {
     Brew: {
+      read: '/brew',
       create: '/brew',
       stop: '/brew/stop',
       pause: '/brew/pause'
