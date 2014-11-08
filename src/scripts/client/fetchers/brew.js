@@ -1,11 +1,24 @@
 var brewResource = require('../resources/brew');
 
 /*
+ * Read
+ *
+ * @method read
+ * @return {Promise}
+ */
+exports.read = function () {
+
+  // Promise
+  return brewResource.read();
+};
+
+
+/*
  * Create
  *
  * @method create
  * @param {Object} brew
- * @callback
+ * @return {Promise}
  */
 exports.create = function (brew) {
 
@@ -18,7 +31,7 @@ exports.create = function (brew) {
  * Stop
  *
  * @method stop
- * @callback
+ * @return {Promise}
  */
 exports.stop = function () {
 
@@ -31,7 +44,7 @@ exports.stop = function () {
  * Pause
  *
  * @method pause
- * @callback
+ * @return {Promise}
  */
 exports.pause = function () {
 

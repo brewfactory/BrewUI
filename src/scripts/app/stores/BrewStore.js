@@ -28,6 +28,7 @@ function BrewStore() {
 // Configure store
 BrewStore.storeName = 'BrewStore';
 BrewStore.handlers = {};
+BrewStore.handlers[BrewConstants.ActionTypes.READ_BREW_SUCCESS] = 'brewUpdated';
 BrewStore.handlers[BrewConstants.ActionTypes.RECEIVE_BREW] = 'brewUpdated';
 BrewStore.handlers[BrewConstants.ActionTypes.CREATE_BREW] = 'brewUpdated';
 

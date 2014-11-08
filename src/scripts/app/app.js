@@ -7,12 +7,14 @@
 'use strict';
 
 var React = require('react');
+var async = require('async');
 var debug = require('debug')('BrewUI:app');
 
 var Context = require('./lib/Context');
 var Application = React.createFactory(require('./components/Application.jsx'));
 var routes = require('./config/routes');
 
+var readBrewAction = require('./actions/brew/readBrew');
 var findBrewLogAction = require('./actions/logs/findBrew');
 var findOneBrewLogAction = require('./actions/logs/findOneBrew');
 
@@ -62,31 +64,48 @@ App.prototype.init = function () {
 
   return new Promise(function (resolve, reject) {
     var actionContext = _this.context.getActionContext();
-    var LogStore = actionContext.getStore('LogStore');
 
-    // Do not get logs when it's already loaded
-    if(LogStore.brewLogs.length) {
-      return resolve();
-    }
+    // Load store data
+    async.parallel({
 
-    // Find brew logs
-    actionContext.executeAction(findBrewLogAction, {}, function (err, brews) {
+      // Load brew
+      brew: function loadBrew(cb) {
+        actionContext.executeAction(readBrewAction, {}, cb);
+      },
+
+      // Load log
+      log: function loadLog (logCb) {
+        var LogStore = actionContext.getStore('LogStore');
+
+        // Do not get logs when it's already loaded
+        if(LogStore.brewLogs.length) {
+          return logCb();
+        }
+
+        async.waterfall([
+
+          // Find brew logs
+          function findLogs(cb) {
+            actionContext.executeAction(findBrewLogAction, {}, cb);
+          },
+
+          // Find selected brew
+          function findOneLog(brews, cb) {
+            if(!brews.length) {
+              return cb();
+            }
+
+            actionContext.executeAction(findOneBrewLogAction, { id: brews[0]._id }, cb);
+          }
+
+        ], logCb);
+      }
+    }, function (err) {
       if(err) {
         return reject(err);
       }
 
-      if(!brews.length) {
-        return resolve();
-      }
-
-      // FInd selected brew
-      actionContext.executeAction(findOneBrewLogAction, { id: brews[0]._id }, function (err) {
-        if(err) {
-          return reject(err);
-        }
-
-        resolve();
-      });
+      resolve();
     });
   });
 };
