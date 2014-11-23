@@ -4,13 +4,8 @@ var React = require('react/addons');
 var moment = require('moment');
 
 var findOneBrewLogAction = require('../../actions/logs/findOneBrew');
-var isClient = !!global.requestAnimationFrame;
 
-var LogChart;
-
-if (isClient) {
-  LogChart = require('./LogChart.jsx');
-}
+var LogChart = require('./LogChart.jsx');
 
 var Log = React.createClass({
 
@@ -21,13 +16,17 @@ var Log = React.createClass({
    * @return {Object} state
    */
   getInitialState: function () {
+    var selectedBrewId;
+
     this.store = this.props.context.getStore('LogStore');
 
-    var selectedBrew = this.store.selectedBrewLog || {};
-    var selectedBrewId = selectedBrew._id;
-
+    if(this.store.brewLogs.length) {
+      selectedBrewId = this.store.brewLogs[0]._id;
+    }
     return {
-      selectedBrewId: selectedBrewId
+      selectedBrewId: selectedBrewId,
+      selectedBrewLog: this.store.selectedBrewLog,
+      brewLogs: this.store.brewLogs
     };
   },
 
@@ -58,7 +57,16 @@ var Log = React.createClass({
    * @method _onChange;
    */
   _onChange: function () {
-    this.forceUpdate();
+    var state = {
+      selectedBrewLog: this.store.selectedBrewLog,
+      brewLogs: this.store.brewLogs
+    };
+
+    if(this.store.brewLogs.length && !this.state.selectedBrewLog) {
+      state.selectedBrewId = this.store.brewLogs[0]._id;
+    }
+
+    this.setState(state);
   },
 
 
@@ -84,8 +92,9 @@ var Log = React.createClass({
    * @method render
    */
   render: function () {
-    var brewLogs = this.store.brewLogs;
-    var selectedBrewLog = this.store.selectedBrewLog;
+    var brewLogs = this.state.brewLogs;
+    var selectedBrewLog = this.state.selectedBrewLog || {};
+    selectedBrewLog.logs = selectedBrewLog.logs || [];
 
     var brewSelector =
       <div className="form-group">
@@ -104,7 +113,9 @@ var Log = React.createClass({
       <div className="row">
         <div className="col-md-12">
           <h4>Temperature</h4>
-        {isClient && selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="temp" /> : <span/> }
+          <div>
+            <LogChart logs={selectedBrewLog.logs} fill="#556270" dataKey="temp" />
+          </div>
         </div>
       </div>;
 
@@ -112,7 +123,9 @@ var Log = React.createClass({
       <div className="row">
         <div className="col-md-12">
           <h4>PWM</h4>
-        {isClient && selectedBrewLog ? <LogChart logs={selectedBrewLog.logs} valueField="pwm" /> : <span/> }
+          <div>
+            <LogChart logs={selectedBrewLog.logs} fill="#C44D58" dataKey="pwm" />
+          </div>
         </div>
       </div>;
 

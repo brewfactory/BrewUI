@@ -3,7 +3,7 @@
 var debug = require('debug')('BrewUI:action');
 var LogConstants = require('../../constants/LogConstants');
 
-module.exports = function (context, payload, done) {
+module.exports = function(context, payload, done) {
   var logFetcher = context.fetcher.get('log');
 
   debug('dispatching FIND_LOG');
@@ -12,20 +12,21 @@ module.exports = function (context, payload, done) {
 
   // Create
   logFetcher.find()
-    .then(function (resp) {
+    .then(function(resp) {
       var brews = resp.brews;
 
       debug('dispatching FIND_LOG_SUCCESS', brews);
       context.dispatch(LogConstants.ActionTypes.FIND_LOG_SUCCESS, brews);
 
-      if(typeof done === 'function') {
+      if (typeof done === 'function') {
         done(null, brews);
       }
     })
-    .catch(function (err) {
+    .catch(function(err) {
       debug('FIND_LOG error', err);
 
-      if(typeof done === 'function') {
+      if (typeof done === 'function') {
+        debug(err);
         done(err);
       }
     });
