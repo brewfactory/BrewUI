@@ -5,7 +5,7 @@ var moment = require('moment');
 
 var findOneBrewLogAction = require('../../actions/logs/findOneBrew');
 
-var LogChart = require('./LogChart.jsx');
+var LogChart = require('./chart/LogChart.jsx');
 
 var Log = React.createClass({
 

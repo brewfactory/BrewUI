@@ -1,8 +1,8 @@
 var React = require('react/addons');
 var StockPaths = require('paths-js/stock');
 
-var _ = require('lodash-node');
-var moment = require('moment');
+var LineLabelX = require('./LineLabelX.jsx');
+var LineLabelY = require('./LineLabelY.jsx');
 
 var Line = React.createClass({
 
@@ -22,21 +22,18 @@ var Line = React.createClass({
   getInitialState: function () {
     var padding = {
       top: 20,
+      bottom: 20,
       left: 40,
       right: 20
     };
 
     var chartState = this.calculateChart({
       data: this.props.data,
-      width: this.props.width - padding.left - padding.right,
+      width: this.props.width - (padding.left + padding.right),
       height: this.props.height
     });
 
     return {
-      labels: {
-        x: chartState.labels.x,
-        y: chartState.labels.y
-      },
       paths: chartState.paths,
       padding: padding
     };
@@ -80,77 +77,6 @@ var Line = React.createClass({
 
 
   /*
-  * Get and generate Y labels
-  *
-  * @method getYLabels
-  * @return {Array}
-  */
-  getYLabels: function (options) {
-    options = options || {};
-
-    var values = _.chain(options.data)
-    .flatten()
-    .pluck('value')
-    .uniq()
-    .value();
-
-    var min = Math.floor(_.min(values));
-    var max = Math.ceil(_.max(values));
-    var step = Math.round((max - min) / 10);
-
-    max += step;
-
-    return _.range(min, max, step)
-    .map(function(value) {
-      var x = 0;
-      var y = options.paths.yscale(value);
-
-      return {
-        x: x,
-        y: y,
-        value: Math.round(value)
-      };
-    });
-  },
-
-
-  /*
-  * Get and generate X labels
-  *
-  * @method getXLabels
-  * @return {Array}
-  */
-  getXLabels: function (options) {
-    options = options || {};
-
-    var values = _.chain(options.data)
-    .flatten()
-    .pluck('date')
-    .map(function (date) { return date.getTime() })
-    .uniq()
-    .value();
-
-    var min = Math.floor(_.min(values));
-    var max = Math.ceil(_.max(values));
-    var step = Math.round((max - min) / 10);
-
-    max += step;
-
-    return _.range(min, max, step)
-    .map(function(value) {
-      var x = options.paths.xscale(value);
-      var y = 0;
-
-      return {
-        x: x,
-        y: y,
-        value: moment(value).format('hh:mm')
-      };
-    });
-  },
-
-
-  /*
   * Calculate chart
   *
   * @method calculateChart
@@ -161,10 +87,6 @@ var Line = React.createClass({
 
     if(!options.data.length || !options.data[0].length) {
       return {
-        labels: {
-          x: [],
-          y: []
-        },
         paths: null
       };
     }
@@ -181,21 +103,7 @@ var Line = React.createClass({
       }
     });
 
-    var yLabels = this.getYLabels({
-      data: options.data,
-      paths: paths
-    });
-
-    var xLabels = this.getXLabels({
-      data: options.data,
-      paths: paths
-    });
-
     return {
-      labels: {
-        x: xLabels,
-        y: yLabels
-      },
       paths: paths
     };
   },
@@ -245,43 +153,23 @@ var Line = React.createClass({
     var isChart = this.state.paths && this.state.paths.curves;
     var _this = this;
 
-    var lineStyle = {
-      stroke: '#000',
-      strokeWidth: 0.2
-    };
-
-    var labels = _this.state.labels.y
-
-    var yLabelStyle = {
-      fontSize: '12px'
-    };
-
     if(!isChart) {
       return (<svg/>);
     }
 
     return (
-      <svg height={_this.props.height + (_this.state.padding.top * 2)} width={_this.props.width} version="1.1">
+      <svg height={_this.props.height + (_this.state.padding.top + _this.state.padding.bottom)}
+            width={_this.props.width} version="1.1">
         <g transform={'translate(0, ' + _this.state.padding.top + ')'}>
           <g transform={'translate(' + _this.state.padding.left + ', 0)'}>
             <g>{this.state.paths.curves.map(_this.getArea)}</g>
             <g>{this.state.paths.curves.map(_this.getLine)}</g>
           </g>
 
-          {_this.state.labels.y.map(function(label, key) {
-            return <g key={key}>
-              <line x1="26" y1={label.y} x2={_this.props.width} y2={label.y} style={lineStyle} />
-              <text x={label.x + 4} y={label.y + 4} style={yLabelStyle}>{label.value}</text>
-            </g>;
-          })}
+          <LineLabelY data={_this.props.data} paths={_this.state.paths} width={_this.props.width} />
 
           <g transform={'translate(' + _this.state.padding.left + ', 0)'}>
-            {_this.state.labels.x.map(function(label, key) {
-              return <g key={key}>
-                <line x1={label.x} y1="0" x2={label.x} y2={_this.props.height} style={lineStyle} />
-                <text x={label.x - 16} y={_this.props.height + _this.state.padding.top} style={yLabelStyle}>{label.value}</text>
-              </g>;
-            })}
+            <LineLabelX data={_this.props.data} paths={_this.state.paths} height={_this.props.height} />
           </g>
         </g>
       </svg>
