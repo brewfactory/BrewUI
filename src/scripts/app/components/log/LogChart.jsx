@@ -1,7 +1,6 @@
 /* jshint ignore:start */
 
 var React = require('react/addons');
-var moment = require('moment');
 
 var LineChart = require('./LineChart.jsx');
 
@@ -82,17 +81,14 @@ var LogChart = React.createClass({
     var data = [];
 
     var data = [logs.map(function (log) {
-      log.date = new Date(log.date);
-
       return {
-        label: moment(log.data).format('YYYY.MM.DD'),
         value: Math.round(log[dataKey] * 100) / 100,
-        date: log.date
+        date: new Date(log.date)
       };
     })];
 
     return (
-      <LineChart data={data} width={width} height={height} fill={[this.props.fill]} />
+      <LineChart data={data} width={width} height={height} fill={[this.props.fill]} stroke={[this.props.stroke]} />
     );
   }
 });

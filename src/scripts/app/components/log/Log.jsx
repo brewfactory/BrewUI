@@ -124,7 +124,7 @@ var Log = React.createClass({
         <div className="col-md-12">
           <h4>PWM</h4>
           <div>
-            <LogChart logs={selectedBrewLog.logs} fill="#C44D58" dataKey="pwm" />
+            <LogChart logs={selectedBrewLog.logs} fill="#C44D58" stroke="#7b000b" dataKey="pwm" />
           </div>
         </div>
       </div>;

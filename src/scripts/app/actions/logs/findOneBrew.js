@@ -25,7 +25,8 @@ module.exports = function (context, payload, done) {
       }
     })
     .catch(function (err) {
-      debug('FIND_ONE_LOG error', err);
+      debug('FIND_ONE_LOG error');
+      debug(err);
 
       if(typeof done === 'function') {
         done(err);

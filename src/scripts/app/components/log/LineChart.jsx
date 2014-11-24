@@ -29,9 +29,10 @@ var LineChart = React.createClass({
     var width = this.props.width;
     var height = this.props.height;
     var fill = this.props.fill;
+    var stroke = this.props.stroke;
 
     return (
-      <Line data={data} width={width} height={height} fill={fill} />
+      <Line data={data} width={width} height={height} fill={fill} stroke={stroke} />
     );
   }
 });
