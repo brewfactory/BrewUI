@@ -19,7 +19,10 @@ var LineLabelY = React.createClass({
   * @return {Object} state
   */
   getInitialState: function () {
-    var labels = this.getLabels();
+    var labels = this.getLabels({
+      data: this.props.data,
+      paths: this.props.paths,
+    });
 
     return {
       labels: labels
@@ -34,13 +37,19 @@ var LineLabelY = React.createClass({
   * @param {Object} nextProps
   */
   componentWillReceiveProps: function(nextProps) {
+    var labels;
 
     // Update labels
     if(this.props.data !== nextProps.data ||
       this.props.paths !== nextProps.paths) {
 
+        labels = this.getLabels({
+          data: nextProps.data,
+          paths: nextProps.paths,
+        });
+
         this.setState({
-          labels: this.getLabels()
+          labels: labels
         });
       }
     },
@@ -50,27 +59,28 @@ var LineLabelY = React.createClass({
     * Get and generate labels
     *
     * @method getLabels
+    * @param {Object} options
     * @return {Array}
     */
-    getLabels: function () {
-      var _this = this;
+    getLabels: function (options) {
+      options = options || {};
 
-      var values = _.chain(_this.props.data)
+      var values = _.chain(options.data)
       .flatten()
       .pluck('value')
       .uniq()
       .value();
 
-      var min = Math.floor(_.min(values));
-      var max = Math.ceil(_.max(values));
-      var step = Math.round((max - min) / 10);
+      var min = _.min(values);
+      var max = _.max(values);
+      var step = (max - min) / 10;
 
       max += step;
 
       return _.range(min, max, step)
       .map(function(value) {
         var x = 0;
-        var y = _this.props.paths.yscale(value);
+        var y = options.paths.yscale(value);
 
         return {
           x: x,
@@ -104,7 +114,7 @@ var LineLabelY = React.createClass({
         <g>
         {_this.state.labels.map(function(label, key) {
           return <g key={key}>
-            <line x1="26" y1={label.y} x2={_this.props.width} y2={label.y} style={lineStyle} />
+            <line x1="30" y1={label.y} x2={_this.props.width - 20} y2={label.y} style={lineStyle} />
             <text x={label.x + 4} y={label.y + 4} style={labelStyle}>{label.value}</text>
           </g>;
         })}

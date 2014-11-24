@@ -71,7 +71,9 @@ var Line = React.createClass({
         height: nextProps.height
       });
 
-      this.setState(chartState);
+      this.setState({
+        paths: chartState.paths
+      });
     }
   },
 
@@ -150,8 +152,8 @@ var Line = React.createClass({
    * @return {JSX}
    */
   render: function () {
-    var isChart = this.state.paths && this.state.paths.curves;
     var _this = this;
+    var isChart = _this.state.paths && _this.state.paths.curves;
 
     if(!isChart) {
       return (<svg/>);
@@ -169,7 +171,8 @@ var Line = React.createClass({
           <LineLabelY data={_this.props.data} paths={_this.state.paths} width={_this.props.width} />
 
           <g transform={'translate(' + _this.state.padding.left + ', 0)'}>
-            <LineLabelX data={_this.props.data} paths={_this.state.paths} height={_this.props.height} />
+            <LineLabelX data={_this.props.data} paths={_this.state.paths}
+                        width={_this.props.width} height={_this.props.height} />
           </g>
         </g>
       </svg>

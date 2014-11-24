@@ -8,6 +8,7 @@ var LineLabelX = React.createClass({
   propTypes: {
     data: React.PropTypes.array.isRequired,
     paths: React.PropTypes.object.isRequired,
+    width: React.PropTypes.number.isRequired,
     height: React.PropTypes.number.isRequired
   },
 
@@ -19,7 +20,11 @@ var LineLabelX = React.createClass({
   * @return {Object} state
   */
   getInitialState: function () {
-    var labels = this.getLabels();
+    var labels = this.getLabels({
+      data: this.props.data,
+      paths: this.props.paths,
+      width: this.props.width
+    });
 
     return {
       labels: labels
@@ -34,13 +39,21 @@ var LineLabelX = React.createClass({
   * @param {Object} nextProps
   */
   componentWillReceiveProps: function(nextProps) {
+    var labels;
 
     // Update labels
     if(this.props.data !== nextProps.data ||
-      this.props.paths !== nextProps.paths) {
+      this.props.paths !== nextProps.paths ||
+      this.props.width !== nextProps.width) {
+
+      labels = this.getLabels({
+        data: nextProps.data,
+        paths: nextProps.paths,
+        width: nextProps.width
+      });
 
       this.setState({
-        labels: this.getLabels()
+        labels: labels
       });
     }
   },
@@ -50,31 +63,35 @@ var LineLabelX = React.createClass({
   * Get and generate labels
   *
   * @method getLabels
+  * @param {Object} options
   * @return {Array}
   */
-  getLabels: function () {
-    var _this = this;
+  getLabels: function (options) {
+    options = options || {};
 
-    var values = _.chain(_this.props.data)
+    var values = _.chain(options.data)
     .flatten()
     .pluck('date')
     .map(function (date) { return date.getTime() })
     .uniq()
     .value();
 
-    var min = Math.floor(_.min(values));
-    var max = Math.ceil(_.max(values));
-    var step = Math.round((max - min) / 20);
+    var min = _.min(values);
+    var max = _.max(values);
+    var stepCount = Math.round(options.width / 60);
+    var step = (max - min) / stepCount;
+
+    max += step;
 
     return _.range(min, max, step)
     .map(function(value) {
-      var x = _this.props.paths.xscale(value);
+      var x = options.paths.xscale(value);
       var y = 0;
 
       return {
         x: x,
         y: y,
-        value: moment(value).format('hh:mm')
+        value: moment(value).format('HH:mm')
       };
     });
   },
