@@ -17,7 +17,6 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "gulp watch",
     "build": "gulp",
     "postinstall": "bower install",
     "prepublish": "gulp",
@@ -26,12 +25,12 @@
   "dependencies": {
     "async": "^0.9.0",
     "bluebird": "^2.3.10",
-    "chart.js": "^1.0.1-beta.2",
     "debug": "^2.0.0",
     "dispatchr": "^0.2.7",
     "flux-router-component": "^0.4.3",
     "lodash-node": "^2.4.1",
     "moment": "^2.8.3",
+    "paths-js": "^0.3.0",
     "react": "^0.12.0",
     "rising-url": "^1.0.3",
     "routr": "^0.0.4",
@@ -61,6 +60,6 @@
     "main-bower-files": "^2.0.0",
     "run-sequence": "^1.0.1",
     "url-loader": "^0.5.5",
-    "webpack": "^1.4.7"
+    "webpack": "^1.4.13"
   }
 }
