@@ -41,9 +41,9 @@ function init(options) {
 
 
   /*
-   * On temperature changed
+   * On pwm changed
    *
-   * @method onTemperatureChanged
+   * @method onPWMChanged
    * @param {Number} pwm
    */
   function onPWMChanged(pwm) {
