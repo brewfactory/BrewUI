@@ -32,7 +32,7 @@ var ActualBrew = React.createClass({
     var cx = React.addons.classSet;
 
     var brew = this.props.brew;
-    var startTimeFormatted = brew.startTime ? moment(brew.startTime).format('YYYY-MM-dd HH:mm') : '';
+    var startTimeFormatted = brew.startTime ? moment(brew.startTime).format('YYYY-MM-DD HH:mm') : '';
 
     // No brew in progress
     if(!brew.name && !brew.phases.length) {
